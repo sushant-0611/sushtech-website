@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="SushTech - Digital Solutions for Your Business Growth">
+    <meta name="keywords" content="web development, digital solutions, pricing, business website">
+    <meta name="author" content="Sushant Kakade">
+    <title>SushTech - Digital Solutions</title>
+    <link rel="icon" type="image/x-icon" href="SushTech_favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+<header>
+    <div class="logo">
+        <img src="SushTech_logo_transparent1.png" alt="SushTech Logo" onerror="this.style.display='none';">
+    </div>
+    <div class="nav-group">
+        <nav>
+            <a href="#home" id="navHome">Home</a>
+            <a href="#pricing" id="navPricing">Pricing</a>
+            <a href="#why-choose" id="navWhyChoose">Why Us</a>
+            <a href="#about" id="navAbout">About</a>
+            <a href="#contact" id="navContact">Contact</a>
+        </nav>
+        <div class="button-group">
+            <button class="mode-btn" id="modeToggle" aria-label="Toggle light/dark mode">
+                <i class="fas fa-sun"></i>
+            </button>
+            <button class="lang-btn" id="languageToggle" aria-label="Switch language">
+                <i class="fas fa-globe"></i>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section id="home" class="hero">
+    <h2 id="heroTitle">
+        We Help <span class="highlight">Businesses Grow</span> Online
+    </h2>
+    <p id="heroDesc">Strategic websites & digital solutions that turn visitors into customers. Fast, secure, and built for results.</p>
+    <div class="hero-buttons">
+        <a href="#contact" class="btn-primary" id="heroBtnPrimary">Get Free Consultation</a>
+        <a href="#pricing" class="btn-secondary" id="heroBtnSecondary">View Pricing</a>
+    </div>
+</section>
+
+<!-- Pricing Section -->
+<section id="pricing" class="pricing">
+    <h3 id="pricingTitle">Simple, Transparent Pricing</h3>
+    <div class="pricing-subhead" id="pricingSubhead">Choose the plan that fits your needs — no negotiation, no hidden fees.</div>
+    
+    <div class="pricing-grid" id="pricingGrid">
+        <!-- Pricing cards will be populated by JavaScript -->
+    </div>
+</section>
+
+<!-- Why Choose Us Section -->
+<section id="why-choose" class="why-choose">
+    <h3 id="whyTitle">Why Choose SushTech?</h3>
+    <div class="choose-grid" id="featuresGrid">
+        <!-- Features will be populated by JavaScript -->
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="about">
+    <div class="about-content">
+        <h3 id="aboutTitle">About SushTech</h3>
+        <p id="aboutDesc">SushTech is a young and innovative digital agency. We help businesses succeed online with high-quality, affordable and scalable digital solutions. Our team blends technology with creativity.</p>
+        
+        <!-- Founder Card -->
+        <div class="founder-card" id="founderCard">
+            <!-- Founder content will be populated by JavaScript -->
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="contact">
+    <h3 id="contactTitle">Contact Us</h3>
+    
+    <!-- Business Email -->
+    <a href="mailto:contact@sushtech.in" class="business-email" id="businessEmailLink">
+        <i class="fas fa-envelope"></i> contact@sushtech.in
+    </a>
+
+    <div class="contact-wrapper">
+        <!-- Contact Info -->
+        <div class="contact-info" id="contactInfo">
+            <!-- Contact info will be populated by JavaScript -->
+        </div>
+
+        <!-- Contact Form - SMS Integration -->
+        <div class="contact-form">
+            <form id="contactForm" action="https://formspree.io/f/your-form-id" method="POST">
+                <div class="form-group">
+                    <input type="text" name="name" id="nameInput" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" id="emailInput" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" name="phone" id="phoneInput" placeholder="Phone Number" required>
+                </div>
+                <div class="form-group">
+                    <textarea name="message" id="messageInput" placeholder="How can we help you?" required></textarea>
+                </div>
+                <!-- Hidden field for SMS notification -->
+                <input type="hidden" name="_sms" value="+919021496257">
+                <input type="hidden" name="_gotcha" style="display:none">
+                <button type="submit" class="submit-btn" id="submitBtn">Send Message</button>
+            </form>
+            <div id="formStatus" style="margin-top: 15px; text-align: center;"></div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p id="footerText">© 2026 SushTech. All rights reserved.</p>
+</footer>
+
+<!-- Floating WhatsApp Button -->
+<a href="#" class="whatsapp-float" id="whatsappFloat" target="_blank" aria-label="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- Configuration and Scripts -->
+<script src="config.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
