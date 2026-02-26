@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TITAN · advanced robotics</title>
+    <!-- Font Awesome 6 (free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #fbfdff;
+            color: #1e2b3a;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        .site-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 2.5rem 1rem;
+        }
+
+        /* ----- subtle grid overlay (professional depth) ----- */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0,102,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,102,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* ----- animations (refined, subtle) ----- */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .fadeUp { animation: fadeUp 0.7s cubic-bezier(0.2, 0.9, 0.3, 1) forwards; }
+        .slideIn { animation: slideIn 0.7s cubic-bezier(0.2, 0.9, 0.3, 1) forwards; }
+        .scaleIn { animation: scaleIn 0.5s cubic-bezier(0.2, 0.9, 0.3, 1) forwards; }
+
+        /* ----- glassmorphism base ----- */
+        .glass-card {
+            background: rgba(255,255,255,0.75);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(0,102,255,0.08);
+            box-shadow: 0 20px 40px -20px rgba(0,0,0,0.12), 0 0 0 1px rgba(255,255,255,0.8) inset;
+        }
+
+        /* ----- navigation (elevated, minimal) ----- */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+            padding: 0.9rem 2.2rem;
+            border-radius: 80px;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0,102,255,0.15);
+            box-shadow: 0 12px 30px -12px rgba(0,102,255,0.12);
+            margin-bottom: 2.5rem;
+            opacity: 0; animation: fadeUp 0.6s ease forwards;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-size: 1.9rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: #11212e;
+        }
+        .logo i {
+            background: #0066ff;
+            color: white;
+            padding: 0.6rem;
+            border-radius: 18px;
+            font-size: 1.5rem;
+            box-shadow: 0 8px 16px -6px #0066ff60;
+        }
+        .logo span {
+            font-weight: 500;
+            background: linear-gradient(130deg, #1e2b3a, #0066ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.2rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #2f4052;
+            font-weight: 460;
+            font-size: 1.05rem;
+            transition: color 0.2s;
+            cursor: pointer;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #0066ff;
+            transition: width 0.2s ease;
+        }
+        .nav-links a:hover {
+            color: #0066ff;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .nav-btn {
+            background: #0066ff;
+            color: white !important;
+            padding: 0.6rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 500;
+            box-shadow: 0 6px 14px -6px #0066ff;
+        }
+        .nav-btn:hover {
+            background: #004db3;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 22px -10px #0066ff;
+        }
+        .nav-btn::after { display: none; }
+
+        /* ----- hero (balanced, professional) ----- */
+        .hero {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin: 2rem 0 4rem;
+        }
+
+        .hero-left {
+            opacity: 0; animation: slideIn 0.7s 0.1s forwards;
+        }
+
+        .hero-left h1 {
+            font-size: 3.6rem;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            color: #14222e;
+            margin-bottom: 1.5rem;
+        }
+        .hero-left h1 i {
+            color: #0066ff;
+            font-size: 3rem;
+            margin-right: 0.2rem;
+        }
+        .hero-left .highlight {
+            color: #0066ff;
+            border-bottom: 3px solid rgba(0,102,255,0.2);
+        }
+        .hero-description {
+            font-size: 1.2rem;
+            color: #4a5f72;
+            max-width: 90%;
+            margin: 1.5rem 0 2rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2.8rem;
+            margin: 2.5rem 0;
+        }
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+        .stat-number {
+            font-size: 2.4rem;
+            font-weight: 600;
+            color: #0066ff;
+            letter-spacing: -0.02em;
+        }
+        .stat-label {
+            color: #5f748b;
+            font-weight: 420;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+        .btn-primary {
+            background: #0066ff;
+            color: white;
+            padding: 1rem 2.8rem;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 1.05rem;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 8px 18px -8px #0066ff;
+        }
+        .btn-primary:hover {
+            background: #004db3;
+            transform: translateY(-2px);
+            box-shadow: 0 14px 26px -12px #0066ff;
+        }
+        .btn-secondary {
+            background: transparent;
+            border: 1.5px solid #cad5e2;
+            color: #2b4155;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 1.05rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-secondary:hover {
+            border-color: #0066ff;
+            color: #0066ff;
+            background: rgba(0,102,255,0.02);
+        }
+
+        .hero-right {
+            background: #ffffff;
+            border-radius: 2.5rem;
+            padding: 1.5rem 1.5rem 1rem 1.5rem;
+            box-shadow: 0 30px 50px -30px rgba(0,102,255,0.24);
+            border: 1px solid rgba(0,102,255,0.1);
+            opacity: 0; animation: scaleIn 0.6s 0.2s forwards;
+        }
+
+        .hero-right img {
+            width: 100%;
+            border-radius: 1.8rem;
+            display: block;
+            transition: transform 0.3s;
+        }
+        .hero-right img:hover { transform: scale(1.01); }
+        .image-caption {
+            text-align: center;
+            margin-top: 0.8rem;
+            color: #677f99;
+            font-size: 0.9rem;
+        }
+
+        /* ----- partner ribbon (clean) ----- */
+        .partners {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(4px);
+            padding: 1.2rem 2.2rem;
+            border-radius: 70px;
+            margin: 3rem 0 3.5rem;
+            border: 1px solid rgba(0,102,255,0.1);
+            opacity: 0; animation: fadeUp 0.6s 0.25s forwards;
+        }
+        .partner-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 1.1rem;
+            font-weight: 450;
+            color: #34536e;
+        }
+        .partner-item i {
+            font-size: 1.5rem;
+            color: #0066ff;
+            opacity: 0.8;
+        }
+
+        /* ----- section headers (refined) ----- */
+        .section-title {
+            font-size: 2.6rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: #152835;
+            margin-bottom: 0.5rem;
+        }
+        .section-sub {
+            color: #57708c;
+            max-width: 620px;
+            margin-bottom: 2.8rem;
+            font-size: 1.15rem;
+            font-weight: 400;
+        }
+
+        /* ----- product cards (professional, crisp) ----- */
+        .product-showcase {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 2rem 0 4rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 2.2rem;
+            padding: 2.2rem 1.8rem 2rem;
+            border: 1px solid rgba(0,0,0,0.04);
+            box-shadow: 0 18px 36px -18px rgba(0,102,255,0.12);
+            transition: all 0.25s;
+            cursor: pointer;
+            opacity: 0; animation: fadeUp 0.5s forwards;
+        }
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.15s; }
+        .product-card:nth-child(3) { animation-delay: 0.2s; }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(0,102,255,0.3);
+            box-shadow: 0 28px 48px -24px #0066ff;
+        }
+
+        .product-icon {
+            background: rgba(0,102,255,0.04);
+            width: 5rem;
+            height: 5rem;
+            border-radius: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.4rem;
+            color: #0066ff;
+            margin-bottom: 1.5rem;
+            transition: 0.2s;
+        }
+        .product-card:hover .product-icon {
+            background: #0066ff;
+            color: white;
+        }
+        .product-card h3 {
+            font-size: 1.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1d2f3f;
+        }
+        .product-card p {
+            color: #546e86;
+            margin: 0.8rem 0 1.5rem;
+            line-height: 1.5;
+        }
+        .product-tag {
+            display: inline-block;
+            background: rgba(0,102,255,0.04);
+            border-radius: 40px;
+            padding: 0.4rem 1.2rem;
+            font-weight: 450;
+            color: #0066ff;
+            font-size: 0.85rem;
+            border: 1px solid rgba(0,102,255,0.15);
+        }
+
+        /* ----- innovation strip (clean gradient) ----- */
+        .innovation-strip {
+            background: linear-gradient(115deg, #f1f7ff, #ffffff);
+            border-radius: 2.5rem;
+            padding: 2.8rem 2.8rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            margin: 3rem 0 3.5rem;
+            border: 1px solid rgba(0,102,255,0.15);
+            box-shadow: 0 20px 40px -20px rgba(0,102,255,0.2);
+        }
+        .innovation-text h2 {
+            font-size: 2.1rem;
+            font-weight: 600;
+            color: #10212e;
+        }
+        .innovation-text p {
+            max-width: 500px;
+            color: #47647c;
+            font-size: 1.05rem;
+            margin-top: 0.6rem;
+        }
+        .innovation-chip {
+            background: #0066ff;
+            color: white;
+            border: none;
+            padding: 0.9rem 2.2rem;
+            border-radius: 60px;
+            font-size: 1.3rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            box-shadow: 0 10px 18px -10px #0066ff;
+            transition: 0.2s;
+        }
+        .innovation-chip:hover {
+            background: #004db3;
+            transform: scale(1.02);
+        }
+
+        /* ----- team grid (professional) ----- */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 2.2rem 0 3rem;
+        }
+        .team-member {
+            background: white;
+            border-radius: 2rem;
+            padding: 2rem 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            border: 1px solid rgba(0,0,0,0.03);
+            box-shadow: 0 12px 28px -16px rgba(0,102,255,0.1);
+            transition: 0.2s;
+            cursor: pointer;
+            opacity: 0; animation: fadeUp 0.5s forwards;
+        }
+        .team-member:nth-child(1) { animation-delay: 0.1s; }
+        .team-member:nth-child(2) { animation-delay: 0.15s; }
+        .team-member:nth-child(3) { animation-delay: 0.2s; }
+        .team-member:hover {
+            border-color: #0066ff30;
+            transform: translateY(-4px);
+            box-shadow: 0 20px 32px -18px #0066ff;
+        }
+        .member-avatar {
+            background: rgba(0,102,255,0.05);
+            color: #0066ff;
+            width: 5rem;
+            height: 5rem;
+            border-radius: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 400;
+            transition: 0.2s;
+        }
+        .team-member:hover .member-avatar {
+            background: #0066ff;
+            color: white;
+        }
+        .member-info h4 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+            color: #1a2c3b;
+        }
+        .member-info p {
+            color: #54718b;
+            font-size: 0.95rem;
+        }
+
+        /* ----- modal (elegant, minimal) ----- */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.2);
+            backdrop-filter: blur(6px);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: white;
+            border-radius: 2rem;
+            padding: 2.5rem 2.5rem;
+            max-width: 460px;
+            width: 90%;
+            box-shadow: 0 40px 70px -20px rgba(0,102,255,0.3);
+            border: 1px solid rgba(0,102,255,0.2);
+            position: relative;
+            animation: scaleIn 0.25s ease;
+        }
+        .modal-close {
+            position: absolute;
+            top: 1.5rem; right: 1.8rem;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: #8a9db2;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .modal-close:hover {
+            color: #0066ff;
+            transform: rotate(90deg);
+        }
+        .modal h2 {
+            font-size: 1.9rem;
+            font-weight: 600;
+            color: #14222e;
+            margin-bottom: 1rem;
+            padding-right: 1.5rem;
+        }
+        .modal p {
+            color: #3f5b75;
+            line-height: 1.6;
+            font-size: 1.05rem;
+        }
+
+        /* ----- footer (clean, structured) ----- */
+        .footer-original {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 2rem;
+            margin-top: 4rem;
+            background: #f2f7fd;
+            border-radius: 2.5rem;
+            padding: 3rem 2.8rem;
+            border: 1px solid rgba(0,102,255,0.1);
+            opacity: 0; animation: fadeUp 0.6s 0.2s forwards;
+        }
+        .footer-col p {
+            color: #4e6c87;
+            margin: 1rem 0 1.2rem;
+        }
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #14222e;
+        }
+        .footer-logo i { color: #0066ff; margin-right: 0.3rem; }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col li {
+            margin: 1rem 0;
+            color: #49647d;
+            transition: 0.2s;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+        .footer-col li:hover {
+            color: #0066ff;
+            transform: translateX(5px);
+        }
+        .footer-col li i {
+            width: 1.6rem;
+            color: #0066ff;
+            opacity: 0.8;
+        }
+        .social-icons {
+            display: flex;
+            gap: 1.3rem;
+            font-size: 1.8rem;
+            color: #0066ff;
+            margin-top: 0.5rem;
+        }
+        .social-icons i { cursor: pointer; transition: 0.2s; }
+        .social-icons i:hover { transform: translateY(-3px); color: #004db3; }
+
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            color: #7d94ad;
+            font-size: 0.9rem;
+        }
+
+        /* ----- responsive ----- */
+        @media (max-width: 900px) {
+            .hero, .product-showcase, .team-grid, .footer-original {
+                grid-template-columns: 1fr;
+            }
+            .navbar { flex-direction: column; padding: 1rem 1.5rem; }
+            .nav-links { gap: 1.2rem; }
+        }
+        @media (max-width: 480px) {
+            .site-wrapper { padding: 1.2rem; }
+            .hero-left h1 { font-size: 2.8rem; }
+            .hero-stats { flex-direction: column; gap: 1rem; }
+        }
+
+        /* subtle scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #ecf3fa; }
+        ::-webkit-scrollbar-thumb { background: #0066ff; border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <div class="site-wrapper">
+        <!-- navigation -->
+        <div class="navbar">
+            <div class="logo">
+                <i class="fa-solid fa-robot"></i>
+                <span>TITAN</span>
+            </div>
+            <div class="nav-links">
+                <a onclick="openModal('products')">Products</a>
+                <a onclick="openModal('innovation')">Innovation</a>
+                <a onclick="openModal('team')">Team</a>
+                <a onclick="openModal('careers')">Careers</a>
+                <a class="nav-btn" onclick="openModal('contact')"><i class="fa-regular fa-star"></i> Contact</a>
+            </div>
+        </div>
+
+        <!-- hero -->
+        <div class="hero">
+            <div class="hero-left">
+                <h1><i class="fa-regular fa-microchip"></i> <span class="highlight">intelligence</span> that moves.</h1>
+                <p class="hero-description">Titan builds autonomous systems for extreme environments. From deep-sea inspection to disaster response — our robots go where humans can’t.</p>
+                <div class="hero-stats">
+                    <div class="stat-item"><span class="stat-number">214+</span><span class="stat-label">deployed</span></div>
+                    <div class="stat-item"><span class="stat-number">12</span><span class="stat-label">patents</span></div>
+                    <div class="stat-item"><span class="stat-number">9</span><span class="stat-label">awards</span></div>
+                </div>
+                <div class="hero-buttons">
+                    <button class="btn-primary" onclick="openModal('demo')"><i class="fa-regular fa-eye"></i> See demo</button>
+                    <button class="btn-secondary" onclick="openModal('whitepaper')"><i class="fa-regular fa-file-lines"></i> Whitepaper</button>
+                </div>
+            </div>
+            <div class="hero-right">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='260' viewBox='0 0 400 260'%3E%3Crect width='400' height='260' fill='%23eaf1fe' rx='30'/%3E%3Ccircle cx='160' cy='110' r='40' fill='%230066ff'/%3E%3Ccircle cx='280' cy='110' r='40' fill='%233d8cff'/%3E%3Crect x='120' y='150' width='200' height='40' rx='20' fill='%23004db3'/%3E%3Crect x='190' y='60' width='60' height='90' rx='20' fill='%230066ff'/%3E%3Ccircle cx='220' cy='70' r='12' fill='%23fcd34d'/%3E%3C/svg%3E" alt="TITAN X2">
+                <div class="image-caption"><i class="fa-regular fa-camera"></i> TITAN‑X2 explorer (6000m)</div>
+            </div>
+        </div>
+
+        <!-- partners -->
+        <div class="partners">
+            <div class="partner-item"><i class="fa-regular fa-building"></i> deepwater inc</div>
+            <div class="partner-item"><i class="fa-regular fa-flask"></i> national lab</div>
+            <div class="partner-item"><i class="fa-regular fa-satellite"></i> aero-space</div>
+            <div class="partner-item"><i class="fa-regular fa-helmet-safety"></i> rescue alliance</div>
+        </div>
+
+        <!-- products grid -->
+        <div class="section-title">original systems</div>
+        <div class="section-sub">full autonomy for the new industrial shift</div>
+        <div class="product-showcase">
+            <div class="product-card" onclick="openModal('abyss')">
+                <div class="product-icon"><i class="fa-regular fa-water"></i></div>
+                <h3>abyss</h3>
+                <p>underwater manipulator with 3D mapping & sample retrieval.</p>
+                <span class="product-tag">deep sea</span>
+            </div>
+            <div class="product-card" onclick="openModal('summit')">
+                <div class="product-icon"><i class="fa-regular fa-mountain"></i></div>
+                <h3>summit</h3>
+                <p>six‑legged walker for unstable terrain / post‑disaster rubble.</p>
+                <span class="product-tag">search & rescue</span>
+            </div>
+            <div class="product-card" onclick="openModal('stratos')">
+                <div class="product-icon"><i class="fa-regular fa-wind"></i></div>
+                <h3>stratos</h3>
+                <p>high‑altitude glider for atmospheric research & comm relay.</p>
+                <span class="product-tag">stratospheric</span>
+            </div>
+        </div>
+
+        <!-- innovation -->
+        <div class="innovation-strip">
+            <div class="innovation-text">
+                <h2>swarm learning · 5G edge · titanium alloy</h2>
+                <p>Real‑time coordination with zero latency.</p>
+            </div>
+            <button class="innovation-chip" onclick="openModal('swarm')"><i class="fa-regular fa-bolt"></i> SWARM OS™</button>
+        </div>
+
+        <!-- team -->
+        <div class="section-title">humans behind the hardware</div>
+        <div class="team-grid">
+            <div class="team-member" onclick="openModal('elena')">
+                <div class="member-avatar"><i class="fa-regular fa-user"></i></div>
+                <div class="member-info"><h4>Dr. Elena Voss</h4><p>founder · ex‑NASA</p></div>
+            </div>
+            <div class="team-member" onclick="openModal('kenji')">
+                <div class="member-avatar"><i class="fa-regular fa-user"></i></div>
+                <div class="member-info"><h4>Kenji Tanaka</h4><p>chief engineer · 30+ patents</p></div>
+            </div>
+            <div class="team-member" onclick="openModal('aisha')">
+                <div class="member-avatar"><i class="fa-regular fa-user"></i></div>
+                <div class="member-info"><h4>Dr. Aisha Carter</h4><p>AI lead · reinforcement learning</p></div>
+            </div>
+        </div>
+
+        <!-- footer -->
+        <div class="footer-original">
+            <div class="footer-col">
+                <div class="footer-logo"><i class="fa-regular fa-robot"></i> TITAN</div>
+                <p>autonomous systems for the unknown. IP designed in california.</p>
+                <div class="social-icons">
+                    <i class="fa-brands fa-github" onclick="openModal('github')"></i>
+                    <i class="fa-brands fa-x-twitter" onclick="openModal('twitter')"></i>
+                    <i class="fa-regular fa-envelope" onclick="openModal('email')"></i>
+                </div>
+            </div>
+            <div class="footer-col">
+                <ul>
+                    <li onclick="openModal('products')"><i class="fa-regular fa-compass"></i> products</li>
+                    <li onclick="openModal('rd')"><i class="fa-regular fa-flask"></i> R&D</li>
+                    <li onclick="openModal('careers')"><i class="fa-regular fa-briefcase"></i> careers</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <ul>
+                    <li onclick="openModal('whitepaper')"><i class="fa-regular fa-file-lines"></i> whitepaper</li>
+                    <li onclick="openModal('investor')"><i class="fa-regular fa-circle-info"></i> investor deck</li>
+                    <li onclick="openModal('partners')"><i class="fa-regular fa-handshake"></i> partners</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <ul>
+                    <li onclick="openModal('location')"><i class="fa-regular fa-location-dot"></i> 300 mission st, sf</li>
+                    <li onclick="openModal('phone')"><i class="fa-regular fa-phone"></i> +1 (888) 848‑2665</li>
+                    <li onclick="openModal('support')"><i class="fa-regular fa-clock"></i> support 24/7</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright"><i class="fa-regular fa-copyright"></i> TITAN robotics · professional edition</div>
+    </div>
+
+    <!-- modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+            <h2 id="modal-title">TITAN</h2>
+            <p id="modal-text">Information panel. All interactive elements are connected.</p>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalText = document.getElementById('modal-text');
+
+        const content = {
+            demo: { title: '🚀 live simulation', text: 'Experience TITAN’s real‑time autonomy: underwater navigation, terrain mapping, and swarm coordination.' },
+            whitepaper: { title: '📄 technical whitepaper', text: 'Comprehensive documentation on swarm algorithms, 5G edge integration, and titanium durability.' },
+            contact: { title: '📬 contact', text: 'Email: hello@titanrobotics.com · Phone: +1 (888) 848‑2665' },
+            abyss: { title: '🌊 ABYSS deep sea', text: '6000m depth, 3D sonar, hydraulic arm, 12h endurance. Deployed in offshore surveys.' },
+            summit: { title: '⛰️ SUMMIT rescue', text: 'Six‑legged stability, rubble navigation, thermal cam, two‑way audio. Payload 150kg.' },
+            stratos: { title: '🌪️ STRATOS glider', text: 'Altitude 25km, endurance 72h, mesh networking, real‑time telemetry.' },
+            swarm: { title: '🐝 SWARM OS™', text: 'Proprietary multi‑agent coordination: self‑healing mesh, distributed intelligence, zero‑latency handoff.' },
+            elena: { title: '👩‍🔬 Dr. Elena Voss', text: 'Founder, ex‑NASA JPL. Led Mars rover autonomy team. PhD MIT.' },
+            kenji: { title: '👨‍💻 Kenji Tanaka', text: 'Chief engineer, 30+ patents in actuation & hydraulics. Previously Boston Dynamics.' },
+            aisha: { title: '👩‍🎓 Dr. Aisha Carter', text: 'AI lead, reinforcement learning, Stanford PhD. SWARM OS core architect.' },
+            products: { title: '🔧 product line', text: 'ABYSE, SUMMIT, STRATOS, and custom defense solutions.' },
+            rd: { title: '🔬 research & development', text: 'Bio‑inspired locomotion, quantum‑resistant comms, underwater charging.' },
+            careers: { title: '💼 careers', text: 'Open roles: robotics software, mechanical design, field applications.' },
+            investor: { title: '📊 investor deck', text: 'Series B open. Contact ir@titanrobotics.com for materials.' },
+            partners: { title: '🤝 partners', text: 'DeepWater Inc, National Labs, Aero‑Space, Rescue Alliance.' },
+            location: { title: '📍 headquarters', text: '300 Mission Street, San Francisco, CA. Visits by appointment.' },
+            phone: { title: '📞 phone', text: '+1 (888) 848‑2665 (main) · support +1 (888) 848‑2666' },
+            support: { title: '⏰ 24/7 support', text: 'support@titanrobotics.com · emergency hotline for field units.' },
+            github: { title: '🐙 github', text: 'Open source: swarm‑sim, robot‑interface, mapping‑tools.' },
+            twitter: { title: '𝕏 x / twitter', text: '@titanrobotics · field updates, patents, events.' },
+            email: { title: '✉️ email', text: 'hello@titanrobotics.com · media@titanrobotics.com' }
+        };
+
+        function openModal(key) {
+            const c = content[key] || { title: 'TITAN robotics', text: 'Detailed information available upon request.' };
+            modalTitle.innerText = c.title;
+            modalText.innerText = c.text;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+    </script>
+</body>
+</html>
