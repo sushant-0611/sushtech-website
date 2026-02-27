@@ -69,7 +69,7 @@ function populatePricingCards() {
         const popularBadge = plan.popular ? '<div class="popular-badge">Most Popular</div>' : '';
         
         html += `
-            <div class="price-card ${popularClass}">
+            <div class="price-card card-scroll-highlight ${popularClass}">
                 ${popularBadge}
                 <div class="price-badge" style="border-color: ${plan.badgeColor}; color: ${plan.badgeColor};">${plan.badge}</div>
                 <h4>${plan.name}</h4>
@@ -98,7 +98,7 @@ function populateFeatures() {
     
     config.features.forEach(feature => {
         html += `
-            <div class="choose-item">
+            <div class="choose-item card-scroll-highlight">
                 <i class="fas ${feature.icon}"></i>
                 <h4>${feature.title}</h4>
                 <p>${feature.description}</p>
@@ -304,7 +304,7 @@ function populateContactInfo() {
 
 // ========== UPDATE WHATSAPP FLOAT LINK ==========
 function updateWhatsAppFloat() {
-    const whatsappFloat = document.getElementById('whatsappFloat');
+    const whatsappFloat = document.querySelector('.whatsapp-float');
     if (!whatsappFloat || typeof SUSHITECH_CONFIG === 'undefined') return;
     
     const config = SUSHITECH_CONFIG;
@@ -388,6 +388,169 @@ window.addEventListener('scroll', () => {
     });
 });
 
+// ========== BACK TO TOP BUTTON ==========
+function initBackToTop() {
+    const backToTopButton = document.getElementById('backToTop');
+    if (!backToTopButton) return;
+    
+    // Show/hide button based on scroll position
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+            backToTopButton.classList.add('show');
+        } else {
+            backToTopButton.classList.remove('show');
+        }
+    });
+    
+    // Smooth scroll to top when clicked
+    backToTopButton.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
+
+// ========== HORIZONTAL SCROLL INDICATOR ==========
+function initHorizontalScrollIndicator() {
+    const demoGrid = document.getElementById('demoGrid');
+    const dots = document.querySelectorAll('.dot');
+    const scrollIndicator = document.querySelector('.scroll-indicator-horizontal');
+    
+    if (!demoGrid || dots.length === 0) return;
+    
+    // Update dots on scroll
+    demoGrid.addEventListener('scroll', function() {
+        const scrollLeft = demoGrid.scrollLeft;
+        const maxScroll = demoGrid.scrollWidth - demoGrid.clientWidth;
+        const scrollPercentage = (scrollLeft / maxScroll) * 100;
+        
+        // Update active dot based on scroll position
+        if (scrollPercentage < 33) {
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === 0);
+            });
+        } else if (scrollPercentage < 66) {
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === 1);
+            });
+        } else {
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === 2);
+            });
+        }
+        
+        // Hide gradient when scrolled to end
+        const gradient = demoGrid.querySelector('::after');
+        if (demoGrid.scrollLeft + demoGrid.clientWidth >= demoGrid.scrollWidth - 10) {
+            demoGrid.style.setProperty('--gradient-opacity', '0');
+        } else {
+            demoGrid.style.setProperty('--gradient-opacity', '1');
+        }
+    });
+    
+    // Click on dots to scroll
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            const cardWidth = demoGrid.querySelector('.demo-card')?.offsetWidth || 300;
+            const gap = 25;
+            const scrollTo = index * (cardWidth + gap);
+            
+            demoGrid.scrollTo({
+                left: scrollTo,
+                behavior: 'smooth'
+            });
+        });
+    });
+    
+    // Hide indicator after user scrolls once
+    if (scrollIndicator) {
+        let hasScrolled = false;
+        
+        demoGrid.addEventListener('scroll', function() {
+            if (!hasScrolled) {
+                hasScrolled = true;
+                setTimeout(() => {
+                    scrollIndicator.style.opacity = '0';
+                    scrollIndicator.style.transition = 'opacity 0.5s ease';
+                }, 2000);
+            }
+        });
+    }
+}
+
+// ========== CARD SCROLL HIGHLIGHT ANIMATION ==========
+function initCardHighlight() {
+    const cards = document.querySelectorAll('.card-scroll-highlight');
+    
+    if (cards.length === 0) return;
+    
+    // Create Intersection Observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Add highlight class when card enters viewport
+                entry.target.classList.add('card-visible');
+                
+                // Optional: Remove highlight after animation
+                // Uncomment if you want the highlight to fade after appearing
+                // setTimeout(() => {
+                //     entry.target.classList.remove('card-visible');
+                // }, 1500);
+            } else {
+                // Remove highlight when card leaves viewport
+                entry.target.classList.remove('card-visible');
+            }
+        });
+    }, {
+        threshold: 0.3, // Trigger when 30% of card is visible
+        rootMargin: '0px 0px -50px 0px' // Slight offset for better UX
+    });
+    
+    // Observe each card
+    cards.forEach(card => {
+        observer.observe(card);
+    });
+    
+    console.log(`✅ Card highlight initialized for ${cards.length} cards`);
+}
+
+// ========== HORIZONTAL CARDS OBSERVER ==========
+function initHorizontalCardsObserver() {
+    const demoGrid = document.getElementById('demoGrid');
+    const cards = document.querySelectorAll('.demo-card');
+    
+    if (!demoGrid || cards.length === 0) return;
+    
+    // Create observer for horizontal cards with custom threshold
+    const horizontalObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('card-visible');
+            } else {
+                // Check if card is still partially visible in horizontal scroll
+                const rect = entry.target.getBoundingClientRect();
+                const containerRect = demoGrid.getBoundingClientRect();
+                
+                // Keep highlight if card is within horizontal viewport
+                if (rect.right > containerRect.left && rect.left < containerRect.right) {
+                    entry.target.classList.add('card-visible');
+                } else {
+                    entry.target.classList.remove('card-visible');
+                }
+            }
+        });
+    }, {
+        threshold: [0, 0.3, 0.6, 1],
+        root: demoGrid,
+        rootMargin: '0px'
+    });
+    
+    cards.forEach(card => {
+        horizontalObserver.observe(card);
+    });
+}
+
 // ========== INITIALIZE PAGE ==========
 function init() {
     // Check if config is loaded
@@ -399,13 +562,23 @@ function init() {
     // Populate all dynamic content from config
     populatePricingCards();
     populateFeatures();
-    populateFounder(); // Now this function exists
+    populateFounder();
     populateContactInfo();
-    populateSocialLinks(); // Populate social links
+    populateSocialLinks();
     updateWhatsAppFloat();
     updateFooter();
     
-    console.log('✅ SushTech website initialized with config data');
+    // Initialize new features
+    initBackToTop();
+    initHorizontalScrollIndicator();
+    
+    // Initialize card highlight after content is populated
+    setTimeout(() => {
+        initCardHighlight();
+        initHorizontalCardsObserver();
+    }, 500); // Small delay to ensure DOM is ready
+    
+    console.log('✅ SushTech website initialized with config data and new features');
     console.log('✅ Social links loaded from config:', SUSHITECH_CONFIG.social);
 }
 
