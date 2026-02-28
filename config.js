@@ -103,7 +103,7 @@ const SUSHITECH_CONFIG = {
     weddingDemos: {
         wedding1: "https://sushant-0611.github.io/wedding-demo/Template_1.html",  // Traditional
         wedding2: "https://sushant-0611.github.io/wedding-demo/Template_2.html",  // Modern
-        wedding3: "https://sushant-0611.github.io/wedding-demo/Template_3.htmll",  // Garden
+        wedding3: "https://sushant-0611.github.io/wedding-demo/Template_3.html",  // Garden
         wedding4: "https://sushant-0611.github.io/wedding-demo/Template_4.html"   // Premium
     },
     
@@ -146,6 +146,7 @@ const SUSHITECH_CONFIG = {
 }
 
 };
+
 
 
 
