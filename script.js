@@ -1,4 +1,73 @@
-// script.js - SushTech Main JavaScript
+// script.js - SushTech Main JavaScript (Optimized Version)
+
+// ========== UTILITY FUNCTIONS ==========
+// Batch DOM reads/writes to prevent layout thrashing
+const DOMHandler = {
+    reads: [],
+    writes: [],
+    scheduled: false,
+    
+    // Schedule a batch operation
+    schedule() {
+        if (this.scheduled) return;
+        this.scheduled = true;
+        
+        requestAnimationFrame(() => {
+            // Perform all reads first
+            const reads = [...this.reads];
+            this.reads = [];
+            
+            const readResults = reads.map(fn => {
+                try { return fn(); } 
+                catch (e) { console.error('DOM read error:', e); return null; }
+            });
+            
+            // Then perform all writes with read results
+            const writes = [...this.writes];
+            this.writes = [];
+            
+            writes.forEach((fn, index) => {
+                try { 
+                    // Pass corresponding read result if available
+                    fn(readResults[index]); 
+                } catch (e) { 
+                    console.error('DOM write error:', e); 
+                }
+            });
+            
+            this.scheduled = false;
+            
+            // Reschedule if new tasks were added during this cycle
+            if (this.reads.length > 0 || this.writes.length > 0) {
+                this.schedule();
+            }
+        });
+    },
+    
+    // Queue a read operation
+    read(fn) {
+        this.reads.push(fn);
+        this.schedule();
+    },
+    
+    // Queue a write operation
+    write(fn) {
+        this.writes.push(fn);
+        this.schedule();
+    }
+};
+
+// Throttle function for performance optimization
+function throttle(func, limit) {
+    let inThrottle;
+    return function(...args) {
+        if (!inThrottle) {
+            func.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
+}
 
 // ========== RIGHT SIDE PANEL MENU ==========
 document.addEventListener('DOMContentLoaded', function() {
@@ -13,18 +82,23 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Function to open panel
     function openPanel() {
-        sidePanel.classList.add('active');
-        overlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        menuToggle.style.opacity = '0';
+        // Use DOMHandler for batch operations
+        DOMHandler.write(() => {
+            sidePanel.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            menuToggle.style.opacity = '0';
+        });
     }
     
     // Function to close panel
     function closePanelMenu() {
-        sidePanel.classList.remove('active');
-        overlay.classList.remove('active');
-        document.body.style.overflow = '';
-        menuToggle.style.opacity = '1';
+        DOMHandler.write(() => {
+            sidePanel.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+            menuToggle.style.opacity = '1';
+        });
     }
     
     menuToggle.addEventListener('click', openPanel);
@@ -43,11 +117,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    window.addEventListener('resize', function() {
+    // Optimized resize handler - using throttle
+    window.addEventListener('resize', throttle(function() {
         if (window.innerWidth > 767 && sidePanel.classList.contains('active')) {
             closePanelMenu();
         }
-    });
+    }, 100));
 });
 
 // ========== USE CONFIG FROM GLOBAL SCOPE ==========
@@ -85,7 +160,10 @@ function populatePricingCards() {
         `;
     });
     
-    pricingGrid.innerHTML = html;
+    // Single DOM write operation
+    DOMHandler.write(() => {
+        pricingGrid.innerHTML = html;
+    });
 }
 
 // ========== POPULATE FEATURES FROM CONFIG ==========
@@ -106,7 +184,9 @@ function populateFeatures() {
         `;
     });
     
-    featuresGrid.innerHTML = html;
+    DOMHandler.write(() => {
+        featuresGrid.innerHTML = html;
+    });
 }
 
 // ========== POPULATE FOUNDER CARD FROM CONFIG ==========
@@ -117,23 +197,22 @@ function populateFounder() {
     const config = SUSHITECH_CONFIG;
     const founder = config.founder;
     
-    // Check if founder card exists in HTML
-    if (!founderCard) return;
-    
-    founderCard.innerHTML = `
-        <div class="founder-img">
-            <img src="${founder.imageUrl}" alt="${founder.fullName || founder.name}">
-        </div>
-        <div class="founder-info">
-            <h4>${founder.name}</h4>
-            <div class="founder-tagline">${founder.tagline}</div>
-            <div class="founder-age">${founder.age}</div>
-            <p class="founder-bio">${founder.bio}</p>
-            <div class="founder-skills">
-                ${founder.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+    DOMHandler.write(() => {
+        founderCard.innerHTML = `
+            <div class="founder-img">
+                <img src="${founder.imageUrl}" alt="${founder.fullName || founder.name}" loading="lazy">
             </div>
-        </div>
-    `;
+            <div class="founder-info">
+                <h4>${founder.name}</h4>
+                <div class="founder-tagline">${founder.tagline}</div>
+                <div class="founder-age">${founder.age}</div>
+                <p class="founder-bio">${founder.bio}</p>
+                <div class="founder-skills">
+                    ${founder.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+                </div>
+            </div>
+        `;
+    });
 }
 
 // ========== DEMO MODAL FUNCTIONS ==========
@@ -146,25 +225,31 @@ window.openDemoModal = function(category) {
     const modalId = category + 'DemoModal';
     const modal = document.getElementById(modalId);
     if (modal) {
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        DOMHandler.write(() => {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
     }
 };
 
 window.closeModal = function(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
+        DOMHandler.write(() => {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        });
     }
 };
 
 function closeAllModals() {
     const modals = document.querySelectorAll('.demo-modal');
-    modals.forEach(modal => {
-        modal.classList.remove('active');
+    DOMHandler.write(() => {
+        modals.forEach(modal => {
+            modal.classList.remove('active');
+        });
+        document.body.style.overflow = '';
     });
-    document.body.style.overflow = '';
 }
 
 window.openDemoLink = function(demoKey) {
@@ -221,19 +306,19 @@ function populateSocialLinks() {
     const config = SUSHITECH_CONFIG;
     const social = config.social;
     
-    // Clear existing links
-    socialLinksContainer.innerHTML = '';
+    // Create document fragment to batch DOM operations
+    const fragment = document.createDocumentFragment();
     
     // Create social links from config
     if (social.linkedin) {
         const link = document.createElement('a');
         link.href = social.linkedin;
         link.target = '_blank';
-        link.rel = 'noopener noreferrer'; // Security best practice
+        link.rel = 'noopener noreferrer';
         link.innerHTML = '<i class="fab fa-linkedin"></i>';
         link.title = 'LinkedIn';
         link.setAttribute('aria-label', 'LinkedIn');
-        socialLinksContainer.appendChild(link);
+        fragment.appendChild(link);
     }
     
     if (social.instagram) {
@@ -244,7 +329,7 @@ function populateSocialLinks() {
         link.innerHTML = '<i class="fab fa-instagram"></i>';
         link.title = 'Instagram';
         link.setAttribute('aria-label', 'Instagram');
-        socialLinksContainer.appendChild(link);
+        fragment.appendChild(link);
     }
     
     if (social.github) {
@@ -255,10 +340,9 @@ function populateSocialLinks() {
         link.innerHTML = '<i class="fab fa-github"></i>';
         link.title = 'GitHub';
         link.setAttribute('aria-label', 'GitHub');
-        socialLinksContainer.appendChild(link);
+        fragment.appendChild(link);
     }
     
-    // Optional: Twitter if exists
     if (social.twitter) {
         const link = document.createElement('a');
         link.href = social.twitter;
@@ -267,8 +351,14 @@ function populateSocialLinks() {
         link.innerHTML = '<i class="fab fa-twitter"></i>';
         link.title = 'Twitter';
         link.setAttribute('aria-label', 'Twitter');
-        socialLinksContainer.appendChild(link);
+        fragment.appendChild(link);
     }
+    
+    // Single DOM write operation
+    DOMHandler.write(() => {
+        socialLinksContainer.innerHTML = '';
+        socialLinksContainer.appendChild(fragment);
+    });
     
     console.log('✅ Social links populated from config:', social);
 }
@@ -285,20 +375,24 @@ function populateContactInfo() {
     const cleanWhatsapp = company.whatsapp.replace(/[^0-9]/g, '');
     const whatsappMessage = encodeURIComponent(`Hello ${company.name}, I'm interested in your services`);
     
-    contactInfo.innerHTML = `
-        <p><i class="fas fa-phone-alt"></i> <span>${company.phone}</span></p>
-        <p><i class="fab fa-whatsapp"></i> <span>${company.whatsapp} (WhatsApp)</span></p>
-        <p><i class="far fa-clock"></i> <span>${company.hours}</span></p>
-        <a href="https://wa.me/${cleanWhatsapp}?text=${whatsappMessage}" 
-           target="_blank" class="chat-btn">
-            <i class="fab fa-whatsapp"></i> Chat on WhatsApp
-        </a>
-    `;
+    DOMHandler.write(() => {
+        contactInfo.innerHTML = `
+            <p><i class="fas fa-phone-alt"></i> <span>${company.phone}</span></p>
+            <p><i class="fab fa-whatsapp"></i> <span>${company.whatsapp} (WhatsApp)</span></p>
+            <p><i class="far fa-clock"></i> <span>${company.hours}</span></p>
+            <a href="https://wa.me/${cleanWhatsapp}?text=${whatsappMessage}" 
+               target="_blank" class="chat-btn">
+                <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+            </a>
+        `;
+    });
     
     const businessEmail = document.querySelector('.business-email');
     if (businessEmail) {
-        businessEmail.innerHTML = `<i class="fas fa-envelope"></i> ${company.email}`;
-        businessEmail.href = `mailto:${company.email}`;
+        DOMHandler.write(() => {
+            businessEmail.innerHTML = `<i class="fas fa-envelope"></i> ${company.email}`;
+            businessEmail.href = `mailto:${company.email}`;
+        });
     }
 }
 
@@ -312,7 +406,9 @@ function updateWhatsAppFloat() {
     const cleanWhatsapp = company.whatsapp.replace(/[^0-9]/g, '');
     const message = encodeURIComponent(`Hello ${company.name}, I'm interested in your services`);
     
-    whatsappFloat.href = `https://wa.me/${cleanWhatsapp}?text=${message}`;
+    DOMHandler.write(() => {
+        whatsappFloat.href = `https://wa.me/${cleanWhatsapp}?text=${message}`;
+    });
 }
 
 // ========== UPDATE FOOTER WITH COMPANY INFO ==========
@@ -322,7 +418,10 @@ function updateFooter() {
     
     const config = SUSHITECH_CONFIG;
     const year = new Date().getFullYear();
-    footer.innerHTML = `© ${year} ${config.company.name}. All rights reserved.`;
+    
+    DOMHandler.write(() => {
+        footer.innerHTML = `© ${year} ${config.company.name}. All rights reserved.`;
+    });
 }
 
 // ========== FORM SUBMISSION ==========
@@ -333,14 +432,20 @@ if (contactForm) {
         
         const formStatus = document.getElementById('formStatus');
         if (formStatus) {
-            formStatus.innerHTML = '<span style="color: #22D3EE; font-weight: 500;">✓ Message sent successfully! We\'ll contact you soon.</span>';
-            formStatus.style.display = 'block';
+            DOMHandler.write(() => {
+                formStatus.innerHTML = '<span style="color: #22D3EE; font-weight: 500;">✓ Message sent successfully! We\'ll contact you soon.</span>';
+                formStatus.style.display = 'block';
+            });
         }
         
         contactForm.reset();
         
         setTimeout(() => {
-            if (formStatus) formStatus.style.display = 'none';
+            if (formStatus) {
+                DOMHandler.write(() => {
+                    formStatus.style.display = 'none';
+                });
+            }
         }, 5000);
     });
 }
@@ -349,44 +454,80 @@ if (contactForm) {
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const targetId = this.getAttribute('href');
+        const target = document.querySelector(targetId);
+        
         if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
+            // Use requestAnimationFrame for smooth scroll
+            requestAnimationFrame(() => {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             });
         }
     });
 });
 
-// ========== ACTIVE NAVIGATION HIGHLIGHT ==========
-window.addEventListener('scroll', () => {
-    let current = '';
+// ========== INTERSECTION OBSERVER FOR ACTIVE NAVIGATION ==========
+// Replaces scroll-based highlight with efficient IntersectionObserver
+function initNavigationObserver() {
     const sections = document.querySelectorAll('section');
     const panelLinks = document.querySelectorAll('.panel-link');
     
     if (sections.length === 0 || panelLinks.length === 0) return;
     
+    // Cache section IDs and their corresponding links
+    const sectionMap = new Map();
     sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (pageYOffset >= (sectionTop - 150)) {
-            current = section.getAttribute('id');
+        const id = section.getAttribute('id');
+        const link = Array.from(panelLinks).find(link => link.getAttribute('href') === `#${id}`);
+        if (link) {
+            sectionMap.set(section, { id, link });
         }
     });
-
-    panelLinks.forEach(link => {
-        link.classList.remove('active');
-        link.style.borderLeftColor = 'transparent';
-        link.style.color = '#F8FAFC';
-        
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-            link.style.borderLeftColor = '#22D3EE';
-            link.style.color = '#22D3EE';
-        }
+    
+    // Intersection Observer options
+    const options = {
+        threshold: 0.3, // Trigger when 30% of section is visible
+        rootMargin: '-50px 0px -50px 0px' // Adjust visible area
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const section = entry.target;
+            const sectionData = sectionMap.get(section);
+            
+            if (!sectionData) return;
+            
+            const { link } = sectionData;
+            
+            // Batch DOM writes
+            DOMHandler.write(() => {
+                if (entry.isIntersecting) {
+                    // Remove active class from all links
+                    panelLinks.forEach(l => {
+                        l.classList.remove('active');
+                        l.style.borderLeftColor = 'transparent';
+                        l.style.color = '#F8FAFC';
+                    });
+                    
+                    // Add active class to current link
+                    link.classList.add('active');
+                    link.style.borderLeftColor = '#22D3EE';
+                    link.style.color = '#22D3EE';
+                }
+            });
+        });
+    }, options);
+    
+    // Observe all sections
+    sections.forEach(section => {
+        observer.observe(section);
     });
-});
+    
+    console.log('✅ Navigation observer initialized');
+}
 
 // ========== BACK TO TOP BUTTON ==========
 function initBackToTop() {
@@ -394,19 +535,24 @@ function initBackToTop() {
     if (!backToTopButton) return;
     
     // Show/hide button based on scroll position
-    window.addEventListener('scroll', function() {
-        if (window.pageYOffset > 300) {
-            backToTopButton.classList.add('show');
-        } else {
-            backToTopButton.classList.remove('show');
-        }
-    });
+    window.addEventListener('scroll', throttle(function() {
+        // Use requestAnimationFrame for scroll handling
+        requestAnimationFrame(() => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+    }, 100));
     
     // Smooth scroll to top when clicked
     backToTopButton.addEventListener('click', function() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+        requestAnimationFrame(() => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
     });
 }
@@ -419,46 +565,65 @@ function initHorizontalScrollIndicator() {
     
     if (!demoGrid || dots.length === 0) return;
     
-    // Update dots on scroll
-    demoGrid.addEventListener('scroll', function() {
-        const scrollLeft = demoGrid.scrollLeft;
-        const maxScroll = demoGrid.scrollWidth - demoGrid.clientWidth;
-        const scrollPercentage = (scrollLeft / maxScroll) * 100;
-        
-        // Update active dot based on scroll position
-        if (scrollPercentage < 33) {
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === 0);
-            });
-        } else if (scrollPercentage < 66) {
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === 1);
-            });
-        } else {
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === 2);
-            });
-        }
-        
-        // Hide gradient when scrolled to end
-        const gradient = demoGrid.querySelector('::after');
-        if (demoGrid.scrollLeft + demoGrid.clientWidth >= demoGrid.scrollWidth - 10) {
-            demoGrid.style.setProperty('--gradient-opacity', '0');
-        } else {
-            demoGrid.style.setProperty('--gradient-opacity', '1');
-        }
-    });
+    // Cache DOM reads to avoid forced reflow
+    let cardWidth = 300; // Default
+    let gap = 25; // Default
+    
+    // Read dimensions once
+    const firstCard = demoGrid.querySelector('.demo-card');
+    if (firstCard) {
+        DOMHandler.read(() => {
+            cardWidth = firstCard.offsetWidth;
+            gap = parseInt(window.getComputedStyle(demoGrid).gap) || 25;
+        });
+    }
+    
+    // Update dots on scroll - throttled and using requestAnimationFrame
+    demoGrid.addEventListener('scroll', throttle(function() {
+        requestAnimationFrame(() => {
+            const scrollLeft = demoGrid.scrollLeft;
+            const maxScroll = demoGrid.scrollWidth - demoGrid.clientWidth;
+            const scrollPercentage = maxScroll > 0 ? (scrollLeft / maxScroll) * 100 : 0;
+            
+            // Update active dot based on scroll position
+            if (scrollPercentage < 33) {
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === 0);
+                });
+            } else if (scrollPercentage < 66) {
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === 1);
+                });
+            } else {
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === 2);
+                });
+            }
+            
+            // Hide gradient when scrolled to end
+            if (demoGrid.scrollLeft + demoGrid.clientWidth >= demoGrid.scrollWidth - 10) {
+                demoGrid.style.setProperty('--gradient-opacity', '0');
+            } else {
+                demoGrid.style.setProperty('--gradient-opacity', '1');
+            }
+        });
+    }, 50));
     
     // Click on dots to scroll
     dots.forEach((dot, index) => {
         dot.addEventListener('click', () => {
-            const cardWidth = demoGrid.querySelector('.demo-card')?.offsetWidth || 300;
-            const gap = 25;
-            const scrollTo = index * (cardWidth + gap);
-            
-            demoGrid.scrollTo({
-                left: scrollTo,
-                behavior: 'smooth'
+            // Use cached values or read fresh in a batch
+            DOMHandler.read(() => {
+                const currentCardWidth = demoGrid.querySelector('.demo-card')?.offsetWidth || cardWidth;
+                const currentGap = parseInt(window.getComputedStyle(demoGrid).gap) || gap;
+                const scrollTo = index * (currentCardWidth + currentGap);
+                
+                requestAnimationFrame(() => {
+                    demoGrid.scrollTo({
+                        left: scrollTo,
+                        behavior: 'smooth'
+                    });
+                });
             });
         });
     });
@@ -471,11 +636,13 @@ function initHorizontalScrollIndicator() {
             if (!hasScrolled) {
                 hasScrolled = true;
                 setTimeout(() => {
-                    scrollIndicator.style.opacity = '0';
-                    scrollIndicator.style.transition = 'opacity 0.5s ease';
+                    requestAnimationFrame(() => {
+                        scrollIndicator.style.opacity = '0';
+                        scrollIndicator.style.transition = 'opacity 0.5s ease';
+                    });
                 }, 2000);
             }
-        });
+        }, { once: true }); // Use once option for efficiency
     }
 }
 
@@ -488,23 +655,18 @@ function initCardHighlight() {
     // Create Intersection Observer
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // Add highlight class when card enters viewport
-                entry.target.classList.add('card-visible');
-                
-                // Optional: Remove highlight after animation
-                // Uncomment if you want the highlight to fade after appearing
-                // setTimeout(() => {
-                //     entry.target.classList.remove('card-visible');
-                // }, 1500);
-            } else {
-                // Remove highlight when card leaves viewport
-                entry.target.classList.remove('card-visible');
-            }
+            // Batch DOM operations
+            requestAnimationFrame(() => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('card-visible');
+                } else {
+                    entry.target.classList.remove('card-visible');
+                }
+            });
         });
     }, {
-        threshold: 0.3, // Trigger when 30% of card is visible
-        rootMargin: '0px 0px -50px 0px' // Slight offset for better UX
+        threshold: 0.3,
+        rootMargin: '0px 0px -50px 0px'
     });
     
     // Observe each card
@@ -525,20 +687,20 @@ function initHorizontalCardsObserver() {
     // Create observer for horizontal cards with custom threshold
     const horizontalObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('card-visible');
-            } else {
-                // Check if card is still partially visible in horizontal scroll
-                const rect = entry.target.getBoundingClientRect();
-                const containerRect = demoGrid.getBoundingClientRect();
-                
-                // Keep highlight if card is within horizontal viewport
-                if (rect.right > containerRect.left && rect.left < containerRect.right) {
+            requestAnimationFrame(() => {
+                if (entry.isIntersecting) {
                     entry.target.classList.add('card-visible');
                 } else {
-                    entry.target.classList.remove('card-visible');
+                    const rect = entry.target.getBoundingClientRect();
+                    const containerRect = demoGrid.getBoundingClientRect();
+                    
+                    if (rect.right > containerRect.left && rect.left < containerRect.right) {
+                        entry.target.classList.add('card-visible');
+                    } else {
+                        entry.target.classList.remove('card-visible');
+                    }
                 }
-            }
+            });
         });
     }, {
         threshold: [0, 0.3, 0.6, 1],
@@ -572,11 +734,14 @@ function init() {
     initBackToTop();
     initHorizontalScrollIndicator();
     
+    // Initialize navigation observer (replaces scroll-based highlight)
+    initNavigationObserver();
+    
     // Initialize card highlight after content is populated
     setTimeout(() => {
         initCardHighlight();
         initHorizontalCardsObserver();
-    }, 500); // Small delay to ensure DOM is ready
+    }, 500);
     
     console.log('✅ SushTech website initialized with config data and new features');
     console.log('✅ Social links loaded from config:', SUSHITECH_CONFIG.social);
