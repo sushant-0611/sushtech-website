@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Azure Bay | Hotel & Restaurant</title>
+    <title>Azure Bay | luxury hotel & coastal dining</title>
     <!-- Font Awesome 6 (free) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Google Fonts: Inter + Playfair Display -->
+    <!-- Google Fonts: Cormorant Garamond + Montserrat (more upscale) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Lightbox2 CSS (optional but adds class) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css">
     <style>
         * {
             margin: 0;
@@ -19,330 +21,402 @@
 
         :root {
             --gold: #c9a14b;
-            --gold-light: #e5c687;
-            --deep-navy: #0b2545;
-            --charcoal: #2e3b4e;
-            --warm-sand: #f8f4ed;
+            --gold-light: #dbb670;
+            --gold-deep: #a77f3a;
+            --navy: #0a1a2b;
+            --navy-light: #1b3b4f;
+            --cream: #faf7f2;
             --pure-white: #ffffff;
-            --font-serif: 'Playfair Display', serif;
-            --font-sans: 'Inter', sans-serif;
-            --shadow-sm: 0 8px 20px rgba(0,0,0,0.06);
-            --shadow-hover: 0 20px 30px -10px rgba(0,20,40,0.2);
-            --transition: all 0.25s ease;
+            --charcoal: #3e4b5c;
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Montserrat', sans-serif;
+            --shadow-elegant: 0 20px 35px -8px rgba(0,20,20,0.15);
+            --shadow-hover: 0 30px 45px -12px rgba(0,20,30,0.25);
+            --transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         body {
             font-family: var(--font-sans);
-            background-color: var(--warm-sand);
-            color: var(--deep-navy);
-            line-height: 1.5;
+            font-weight: 300;
+            background-color: var(--cream);
+            color: var(--navy);
+            line-height: 1.6;
+            scroll-behavior: smooth;
         }
 
-        /* container */
         .container {
-            max-width: 1280px;
+            max-width: 1300px;
             margin: 0 auto;
             padding: 0 2rem;
         }
 
-        /* header / nav */
+        /* === enhanced navbar (transparent to solid) === */
         .navbar {
-            background: var(--pure-white);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
-            position: sticky;
+            position: fixed;
+            width: 100%;
             top: 0;
-            z-index: 100;
-            backdrop-filter: blur(6px);
-            background-color: rgba(255,255,255,0.9);
+            z-index: 1000;
+            padding: 1.2rem 0;
+            transition: background 0.4s ease, padding 0.3s ease, box-shadow 0.3s;
+            background: transparent;
         }
-
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            padding: 0.7rem 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
         .nav-container {
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
-            padding: 1rem 2rem;
+            padding: 0 2rem;
             max-width: 1400px;
             margin: 0 auto;
         }
-
         .logo {
             font-family: var(--font-serif);
-            font-size: 2rem;
+            font-size: 2.4rem;
             font-weight: 700;
-            letter-spacing: -0.5px;
-            color: var(--deep-navy);
+            letter-spacing: 1px;
+            color: white;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: var(--transition);
+        }
+        .navbar.scrolled .logo {
+            color: var(--navy);
+            text-shadow: none;
         }
         .logo span {
             color: var(--gold);
         }
-
         .nav-links {
             display: flex;
             gap: 2.2rem;
             align-items: center;
-            flex-wrap: wrap;
         }
         .nav-links a {
             text-decoration: none;
             font-weight: 500;
-            color: var(--charcoal);
-            font-size: 1rem;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            color: white;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.2);
             transition: var(--transition);
             border-bottom: 2px solid transparent;
             padding-bottom: 4px;
+            text-transform: uppercase;
+        }
+        .navbar.scrolled .nav-links a {
+            color: var(--navy);
+            text-shadow: none;
         }
         .nav-links a:hover {
-            color: var(--gold);
             border-bottom-color: var(--gold);
+            color: var(--gold);
         }
         .book-btn {
-            background: var(--deep-navy);
-            color: white !important;
-            padding: 0.6rem 1.5rem;
-            border-radius: 60px;
-            border: none;
+            background: var(--gold);
+            color: var(--navy) !important;
+            padding: 0.6rem 1.8rem;
+            border-radius: 50px;
             font-weight: 600;
-            border-bottom: none !important;
+            border: none;
+            text-shadow: none !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         .book-btn:hover {
-            background: var(--gold);
-            color: var(--deep-navy) !important;
-            border-bottom: none !important;
+            background: white;
+            color: var(--navy) !important;
+            border-bottom-color: transparent !important;
         }
-
-        /* mobile menu toggle (simple) */
+        .navbar.scrolled .book-btn {
+            background: var(--navy);
+            color: white !important;
+        }
+        .navbar.scrolled .book-btn:hover {
+            background: var(--gold);
+            color: var(--navy) !important;
+        }
         .menu-toggle {
             display: none;
-            font-size: 1.8rem;
-            color: var(--deep-navy);
+            font-size: 2rem;
+            color: white;
             cursor: pointer;
         }
+        .navbar.scrolled .menu-toggle {
+            color: var(--navy);
+        }
 
-        /* hero */
+        /* === HERO FULLSCREEN === */
         .hero {
-            background: linear-gradient(95deg, #0b2545d9 0%, #0b2545b0 50%), url('https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
-            min-height: 85vh;
+            height: 100vh;
+            min-height: 700px;
+            background: linear-gradient(105deg, #0a1a2bcc 0%, #0a1a2b99 50%, transparent 90%), url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=2080&auto=format&fit=crop') center/cover no-repeat;
+            background-attachment: fixed;
             display: flex;
             align-items: center;
             color: white;
-            border-bottom-left-radius: 3rem;
-            border-bottom-right-radius: 3rem;
             margin-bottom: 4rem;
         }
         .hero-content {
-            max-width: 700px;
-            padding: 4rem 2rem;
+            max-width: 850px;
+            padding: 0 3rem;
+            margin-top: 3rem;
         }
         .hero-content h1 {
             font-family: var(--font-serif);
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            line-height: 1.1;
+            font-size: clamp(3rem, 7vw, 5.8rem);
             font-weight: 700;
+            line-height: 1.0;
             margin-bottom: 1rem;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .hero-underline {
+            width: 120px;
+            height: 3px;
+            background: var(--gold);
+            margin: 1.8rem 0 1.5rem;
         }
         .hero-content p {
             font-size: 1.3rem;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
             opacity: 0.9;
+            max-width: 600px;
+            font-weight: 300;
         }
         .btn-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 1.2rem;
         }
         .btn-primary, .btn-secondary {
-            padding: 0.9rem 2.4rem;
-            border-radius: 60px;
-            font-weight: 600;
+            padding: 1rem 2.8rem;
+            border-radius: 50px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
             text-decoration: none;
             transition: var(--transition);
             display: inline-block;
-            border: 2px solid transparent;
+            border: 1.5px solid transparent;
         }
         .btn-primary {
             background: var(--gold);
-            color: var(--deep-navy);
+            color: var(--navy);
+            box-shadow: 0 8px 20px rgba(201,161,75,0.25);
         }
         .btn-primary:hover {
             background: transparent;
             border-color: var(--gold);
             color: var(--gold);
+            transform: translateY(-3px);
         }
         .btn-secondary {
             background: transparent;
-            border: 2px solid white;
+            border: 1.5px solid white;
             color: white;
         }
         .btn-secondary:hover {
             background: white;
-            color: var(--deep-navy);
+            color: var(--navy);
+            border-color: white;
+            transform: translateY(-3px);
         }
 
-        /* sections */
+        /* === elegant sections === */
         section {
-            padding: 5rem 0;
+            padding: 6rem 0;
         }
         .section-title {
             font-family: var(--font-serif);
-            font-size: 2.8rem;
-            font-weight: 700;
-            color: var(--deep-navy);
-            margin-bottom: 1rem;
-            text-align: center;
+            font-size: 3.5rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 0.8rem;
+            letter-spacing: -0.5px;
+        }
+        .section-title span {
+            color: var(--gold);
         }
         .section-subhead {
-            text-align: center;
-            font-size: 1.2rem;
-            max-width: 700px;
+            font-size: 1.1rem;
+            max-width: 600px;
             margin: 0 auto 4rem auto;
             color: var(--charcoal);
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+        }
+        .section-subhead:after {
+            content: '';
+            display: block;
+            width: 70px;
+            height: 2px;
+            background: var(--gold);
+            margin: 1.2rem auto 0;
         }
 
-        /* features / cards */
+        /* === cards refined === */
         .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.2rem;
         }
         .card {
             background: var(--pure-white);
-            border-radius: 2rem;
+            border-radius: 30px;
             overflow: hidden;
-            box-shadow: var(--shadow-sm);
+            box-shadow: var(--shadow-elegant);
             transition: var(--transition);
             text-decoration: none;
             color: inherit;
             display: block;
         }
         .card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-15px);
             box-shadow: var(--shadow-hover);
         }
         .card-img {
             width: 100%;
-            height: 240px;
+            height: 280px;
             object-fit: cover;
+            transition: transform 0.8s;
+        }
+        .card:hover .card-img {
+            transform: scale(1.05);
         }
         .card-content {
-            padding: 1.8rem 1.5rem 2rem;
+            padding: 2rem 1.8rem 2.2rem;
         }
         .card-content h3 {
             font-family: var(--font-serif);
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
         }
         .card-content p {
             color: var(--charcoal);
             margin-bottom: 1.2rem;
         }
         .price-badge {
-            font-weight: 700;
-            color: var(--gold);
-            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--gold-deep);
+            font-size: 1.3rem;
+            border-top: 1px solid #eee;
+            padding-top: 1rem;
+            display: inline-block;
         }
 
-        /* about / feature row */
+        /* === feature row more visual === */
         .feature-row {
             display: flex;
             flex-wrap: wrap;
-            gap: 3rem;
+            gap: 4rem;
             align-items: center;
             background: var(--pure-white);
-            border-radius: 3rem;
-            padding: 3rem;
-            box-shadow: var(--shadow-sm);
+            border-radius: 50px;
+            padding: 3.5rem 4rem;
+            box-shadow: var(--shadow-elegant);
         }
         .feature-text {
             flex: 1 1 300px;
         }
         .feature-text h2 {
             font-family: var(--font-serif);
-            font-size: 2.3rem;
+            font-size: 2.8rem;
+            font-weight: 600;
             margin-bottom: 1.5rem;
         }
         .feature-text ul {
             list-style: none;
         }
         .feature-text li {
-            margin-bottom: 0.8rem;
-            font-weight: 400;
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
             gap: 0.8rem;
+            font-size: 1.1rem;
         }
         .feature-text i {
             color: var(--gold);
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             width: 2rem;
         }
         .feature-image {
             flex: 1 1 300px;
-            border-radius: 2rem;
+            border-radius: 30px;
             overflow: hidden;
-            box-shadow: var(--shadow-sm);
+            box-shadow: 0 25px 40px -15px #00000030;
         }
         .feature-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
+            transition: transform 0.6s;
+        }
+        .feature-image:hover img {
+            transform: scale(1.03);
         }
 
-        /* menu preview */
-        .menu-highlight {
-            background: var(--pure-white);
-            border-radius: 3rem;
-            padding: 3rem;
-            box-shadow: var(--shadow-sm);
-        }
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        /* === dining carousel / menu grid (animated) === */
+        .menu-carousel {
+            display: flex;
             gap: 2rem;
-            margin: 3rem 0 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 3rem 0;
         }
-        .menu-item {
+        .menu-tile {
+            background: white;
+            padding: 2.8rem 1.8rem;
+            border-radius: 40px;
+            box-shadow: var(--shadow-elegant);
             text-align: center;
+            flex: 1 1 180px;
+            transition: 0.25s;
         }
-        .menu-item i {
-            font-size: 2.5rem;
+        .menu-tile:hover {
+            background: var(--navy);
+            color: white;
+            transform: scale(0.98);
+        }
+        .menu-tile i {
+            font-size: 3rem;
             color: var(--gold);
-            background: #f8f0e0;
-            padding: 1rem;
-            border-radius: 2rem;
             margin-bottom: 1rem;
         }
-        .menu-item h4 {
-            font-size: 1.5rem;
+        .menu-tile h4 {
             font-family: var(--font-serif);
-        }
-        .menu-item span {
-            color: var(--gold);
-            font-weight: 700;
+            font-size: 1.8rem;
+            font-weight: 600;
         }
 
-        /* testimonial */
+        /* testimonial with bigger images */
         .testimonial-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
         }
         .testimonial-card {
             background: var(--pure-white);
-            padding: 2rem;
-            border-radius: 2rem;
-            box-shadow: var(--shadow-sm);
+            padding: 2.5rem 2rem;
+            border-radius: 40px;
+            box-shadow: var(--shadow-elegant);
+            position: relative;
         }
         .testimonial-card i {
             color: var(--gold);
-            font-size: 2rem;
-            margin-bottom: 1rem;
+            font-size: 2.2rem;
+            opacity: 0.5;
+            margin-bottom: 0.8rem;
         }
         .testimonial-card p {
             font-style: italic;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 1rem;
         }
         .customer {
             display: flex;
@@ -350,24 +424,26 @@
             gap: 1rem;
         }
         .customer img {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             object-fit: cover;
+            border: 3px solid var(--gold-light);
         }
 
-        /* reservation / cta */
+        /* reservation / cta parallax style */
         .cta-section {
-            background: linear-gradient(145deg, var(--deep-navy), #123456);
-            border-radius: 3rem;
-            padding: 4rem 3rem;
+            background: linear-gradient(135deg, #0a1a2b 0%, #1a3345 100%);
+            border-radius: 60px;
+            padding: 5rem 4rem;
             text-align: center;
             color: white;
+            box-shadow: var(--shadow-elegant);
         }
         .cta-section h2 {
-            font-size: 2.5rem;
+            font-size: 3.5rem;
             font-family: var(--font-serif);
-            margin-bottom: 1.5rem;
+            line-height: 1.1;
         }
         .reserve-form {
             display: flex;
@@ -378,59 +454,81 @@
             margin: 2.5rem auto 0;
         }
         .reserve-form input, .reserve-form select {
-            padding: 1rem 1.5rem;
+            padding: 1.1rem 1.8rem;
             border: none;
             border-radius: 60px;
             font-size: 1rem;
             flex: 1 1 180px;
-            background: white;
-            color: var(--deep-navy);
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(6px);
+            color: white;
+            border: 1px solid rgba(255,215,150,0.2);
+            transition: 0.2s;
+        }
+        .reserve-form input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+        .reserve-form input:focus, .reserve-form select:focus {
+            outline: none;
+            border-color: var(--gold);
+            background: rgba(0,0,0,0.3);
+        }
+        .reserve-form select option {
+            background: var(--navy);
+            color: white;
         }
         .reserve-form button {
-            padding: 1rem 2.5rem;
+            padding: 1.1rem 2.8rem;
             border: none;
             border-radius: 60px;
             background: var(--gold);
-            color: var(--deep-navy);
-            font-weight: 700;
+            color: var(--navy);
+            font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
-            flex: 1 1 160px;
+            flex: 1 1 180px;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
         }
         .reserve-form button:hover {
-            background: var(--gold-light);
+            background: white;
+            transform: translateY(-3px);
         }
 
-        /* footer */
+        /* footer improved */
         .footer {
-            background: var(--deep-navy);
-            color: #ddd;
-            padding: 4rem 2rem 2rem;
-            border-top-left-radius: 3rem;
-            border-top-right-radius: 3rem;
-            margin-top: 3rem;
+            background: var(--navy);
+            color: #ccdbe9;
+            padding: 5rem 2rem 2rem;
+            border-top-left-radius: 60px;
+            border-top-right-radius: 60px;
+            margin-top: 4rem;
         }
         .footer-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 2.5rem;
-            max-width: 1280px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            max-width: 1300px;
             margin: 0 auto;
         }
         .footer-col h4 {
             color: white;
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
             margin-bottom: 1.5rem;
-            font-size: 1.2rem;
+            font-weight: 600;
         }
         .footer-col a, .footer-col p {
-            color: #bbb;
+            color: #b0c6da;
             text-decoration: none;
             display: block;
             margin-bottom: 0.7rem;
             transition: var(--transition);
+            font-weight: 300;
         }
         .footer-col a:hover {
             color: var(--gold);
+            transform: translateX(5px);
         }
         .social-icons {
             display: flex;
@@ -438,26 +536,32 @@
             margin-top: 1rem;
         }
         .social-icons a {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             color: white;
         }
+
         .copyright {
             text-align: center;
-            border-top: 1px solid #3a4a5e;
-            padding-top: 2rem;
+            border-top: 1px solid #2f4a62;
+            padding-top: 2.5rem;
             margin-top: 3rem;
             font-size: 0.9rem;
         }
 
-        /* responsiveness */
-        @media (max-width: 768px) {
+        /* mobile & responsive */
+        @media (max-width: 900px) {
             .nav-links {
                 display: none;
                 width: 100%;
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 1rem;
-                padding: 1.5rem 0 0.5rem;
+                background: rgba(0,0,0,0.4);
+                backdrop-filter: blur(15px);
+                padding: 1.8rem;
+                border-radius: 30px;
+            }
+            .navbar.scrolled .nav-links {
+                background: rgba(255,255,255,0.9);
             }
             .nav-links.show {
                 display: flex;
@@ -465,278 +569,262 @@
             .menu-toggle {
                 display: block;
             }
-            .nav-container {
-                align-items: center;
-            }
-            .hero-content {
-                padding: 2rem 1rem;
+            .hero {
+                background-attachment: scroll;
             }
             .feature-row {
-                padding: 2rem 1.5rem;
+                padding: 2rem;
             }
             .cta-section {
                 padding: 3rem 1.5rem;
+            }
+            .section-title {
+                font-size: 2.6rem;
+            }
+        }
+        @media (max-width: 500px) {
+            .hero-content {
+                padding: 0 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- header / navigation -->
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="logo">Azure<span>Bay</span></div>
             <div class="menu-toggle" id="mobile-menu"><i class="fas fa-bars"></i></div>
             <div class="nav-links" id="navLinks">
                 <a href="#home">Home</a>
-                <a href="#rooms">Rooms</a>
+                <a href="#rooms">Suites</a>
                 <a href="#dining">Dining</a>
-                <a href="#about">About</a>
+                <a href="#about">The Experience</a>
                 <a href="#contact">Contact</a>
                 <a href="#reservation" class="book-btn">Book Now</a>
             </div>
         </div>
     </nav>
 
-    <main>
-        <!-- hero / home -->
-        <section id="home" class="hero">
-            <div class="container hero-content">
-                <h1>Luxury stay & fine dining by the bay</h1>
-                <p>Experience unmatched comfort, ocean view rooms, and a culinary journey at Azure Bay.</p>
-                <div class="btn-group">
-                    <a href="#reservation" class="btn-primary">Reserve a table</a>
-                    <a href="#rooms" class="btn-secondary">Explore rooms</a>
-                </div>
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Azure Bay<br>where waves meet wonder</h1>
+            <div class="hero-underline"></div>
+            <p>Five‑star hotel & coastal gastronomy. Perched on the Pacific, every moment is crafted for distinction.</p>
+            <div class="btn-group">
+                <a href="#reservation" class="btn-primary">Reserve your stay</a>
+                <a href="#dining" class="btn-secondary">Explore dining</a>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- featured accommodations -->
-        <section id="rooms">
-            <div class="container">
-                <h2 class="section-title">Elegant stays</h2>
-                <p class="section-subhead">Handpicked rooms with panoramic views and premium amenities</p>
-                <div class="card-grid">
-                    <a href="#" class="card">
-                        <img class="card-img" src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=2070&auto=format&fit=crop" alt="Deluxe suite">
-                        <div class="card-content">
-                            <h3>Deluxe Suite</h3>
-                            <p>Bay view, king bed, private balcony</p>
-                            <span class="price-badge">$299 / night</span>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img class="card-img" src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=2070&auto=format&fit=crop" alt="Presidential">
-                        <div class="card-content">
-                            <h3>Presidential</h3>
-                            <p>Panoramic terrace, jacuzzi, butler service</p>
-                            <span class="price-badge">$599 / night</span>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img class="card-img" src="https://images.unsplash.com/photo-1590490360182-c33d577334ee?q=80&w=1974&auto=format&fit=crop" alt="Family room">
-                        <div class="card-content">
-                            <h3>Family connecting</h3>
-                            <p>Two bedrooms, child friendly, kitchenette</p>
-                            <span class="price-badge">$420 / night</span>
-                        </div>
-                    </a>
-                </div>
+    <section id="rooms">
+        <div class="container">
+            <h2 class="section-title">Signature <span>Suites</span></h2>
+            <p class="section-subhead">Hand picked for the discerning traveller</p>
+            <div class="card-grid">
+                <a href="#" class="card">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?q=80&w=2070&auto=format&fit=crop" alt="Oceanfront suite">
+                    <div class="card-content">
+                        <h3>Oceanfront Pavillion</h3>
+                        <p>120° bay view, private terrace, deep soak tub</p>
+                        <span class="price-badge">$499 / night</span>
+                    </div>
+                </a>
+                <a href="#" class="card">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=2025&auto=format&fit=crop" alt="Cliff house">
+                    <div class="card-content">
+                        <h3>The Cliff House</h3>
+                        <p>Two floors, glass wall, infinity edge hot tub</p>
+                        <span class="price-badge">$899 / night</span>
+                    </div>
+                </a>
+                <a href="#" class="card">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1591088398332-8a7791972843?q=80&w=1974&auto=format&fit=crop" alt="garden suite">
+                    <div class="card-content">
+                        <h3>Garden Atrium</h3>
+                        <p>Courtyard view, indoor plants, spa bathroom</p>
+                        <span class="price-badge">$329 / night</span>
+                    </div>
+                </a>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- about + feature (reliable & professional) -->
-        <section id="about">
-            <div class="container feature-row">
-                <div class="feature-text">
-                    <h2>Where hospitality meets excellence</h2>
-                    <ul>
-                        <li><i class="fas fa-wifi"></i> High-speed fibre internet — work remotely</li>
-                        <li><i class="fas fa-clock"></i> 24/7 concierge & room service</li>
-                        <li><i class="fas fa-leaf"></i> Sustainable, locally sourced restaurant</li>
-                        <li><i class="fas fa-dumbbell"></i> Fitness & spa with certified trainers</li>
-                        <li><i class="fas fa-shield-alt"></i> Certified cleaning & safety protocols</li>
-                    </ul>
-                </div>
-                <div class="feature-image">
-                    <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1974&auto=format&fit=crop" alt="hotel lobby professional" loading="lazy">
-                </div>
+    <section id="about">
+        <div class="container feature-row">
+            <div class="feature-text">
+                <h2>Beyond hospitality</h2>
+                <ul>
+                    <li><i class="fas fa-concierge-bell"></i> Personal butler & 24h dedicated service</li>
+                    <li><i class="fas fa-wine-glass-alt"></i> 450+ wine labels, sommelier on call</li>
+                    <li><i class="fas fa-spa"></i> Ocean‑front spa & hammam</li>
+                    <li><i class="fas fa-laptop"></i> Boardroom & secretarial services</li>
+                    <li><i class="fas fa-helicopter"></i> Helicopter transfer / tours</li>
+                </ul>
             </div>
-        </section>
-
-        <!-- dining / restaurant menu preview -->
-        <section id="dining">
-            <div class="container menu-highlight">
-                <h2 class="section-title">The Restaurant</h2>
-                <p class="section-subhead">Award‑winning chefs, seasonal tasting menus</p>
-                <div class="menu-grid">
-                    <div class="menu-item">
-                        <i class="fas fa-utensils"></i>
-                        <h4>Degustation menu</h4>
-                        <span>5 courses $85</span>
-                    </div>
-                    <div class="menu-item">
-                        <i class="fas fa-fish"></i>
-                        <h4>Catch of the day</h4>
-                        <span>market price</span>
-                    </div>
-                    <div class="menu-item">
-                        <i class="fas fa-wine-glass-alt"></i>
-                        <h4>Wine pairing</h4>
-                        <span>12 premium labels</span>
-                    </div>
-                    <div class="menu-item">
-                        <i class="fas fa-birthday-cake"></i>
-                        <h4>Pastry art</h4>
-                        <span>by Michelin pastry chef</span>
-                    </div>
-                </div>
-                <div style="text-align: center; margin-top: 2rem;">
-                    <a href="#reservation" class="btn-primary" style="background: var(--deep-navy); color: white;">View full menu</a>
-                </div>
+            <div class="feature-image">
+                <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070&auto=format&fit=crop" alt="luxury service">
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- testimonials -->
-        <section>
-            <div class="container">
-                <h2 class="section-title">Guest stories</h2>
-                <p class="section-subhead">Real experiences from Azure Bay</p>
-                <div class="testimonial-grid">
-                    <div class="testimonial-card">
-                        <i class="fas fa-quote-left"></i>
-                        <p>“The room was immaculate, and the restaurant’s lobster risotto is the best I’ve ever had. Truly professional staff.”</p>
-                        <div class="customer">
-                            <img src="https://images.unsplash.com/photo-1494790108777-466fd0e0c8c7?w=150&auto=format&fit=crop" alt="customer">
-                            <div><strong>Helena K.</strong> – business traveller</div>
-                        </div>
+    <section id="dining">
+        <div class="container">
+            <h2 class="section-title">Coastal <span>Gastronomy</span></h2>
+            <p class="section-subhead">MICHELIN * style, relaxed elegance</p>
+            <div class="menu-carousel">
+                <div class="menu-tile"><i class="fas fa-oyster"></i><h4>Raw bar</h4><span>daily oysters</span></div>
+                <div class="menu-tile"><i class="fas fa-fish"></i><h4>Catch</h4><span>line‑caught</span></div>
+                <div class="menu-tile"><i class="fas fa-salad"></i><h4>Garden</h4><span>organic</span></div>
+                <div class="menu-tile"><i class="fas fa-wine-bottle"></i><h4>Cellar</h4><span>grand cru</span></div>
+                <div class="menu-tile"><i class="fas fa-cheese"></i><h4>Fromagerie</h4><span>artisan</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2 class="section-title">Kind <span>words</span></h2>
+            <p class="section-subhead">guests from around the world</p>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-left"></i>
+                    <p>“The level of detail — from the warm towel upon arrival to the handwritten welcome note — sets Azure Bay apart.”</p>
+                    <div class="customer">
+                        <img src="https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=150&auto=format&fit=crop" alt="customer">
+                        <div><strong>Eleanor P.</strong> – London</div>
                     </div>
-                    <div class="testimonial-card">
-                        <i class="fas fa-quote-left"></i>
-                        <p>“We held our anniversary dinner here. Everything was perfect — the sommelier helped us pick an amazing bottle.”</p>
-                        <div class="customer">
-                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop" alt="customer">
-                            <div><strong>Marcus & Lin</strong> – anniversary</div>
-                        </div>
+                </div>
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-left"></i>
+                    <p>“We came for our anniversary; the private dinner on the beach was pure magic. Impeccable service.”</p>
+                    <div class="customer">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop" alt="customer">
+                        <div><strong>David & Maya</strong> – Sydney</div>
                     </div>
-                    <div class="testimonial-card">
-                        <i class="fas fa-quote-left"></i>
-                        <p>“Reliable high‑speed internet, very quiet room — perfect for my remote work week. I’ll be back!”</p>
-                        <div class="customer">
-                            <img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=150&auto=format&fit=crop" alt="customer">
-                            <div><strong>David R.</strong> – digital nomad</div>
-                        </div>
+                </div>
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-left"></i>
+                    <p>“As a travel writer, I’m hard to impress. Azure Bay’s authenticity and professionalism won me over.”</p>
+                    <div class="customer">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop" alt="customer">
+                        <div><strong>Sophia K.</strong> – travel + leisure</div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- reservation / cta (working form) -->
-        <section id="reservation">
-            <div class="container cta-section">
-                <h2>Secure your table or suite</h2>
-                <p>Reliable booking, instant confirmation, free cancellation up to 24h</p>
-                <form class="reserve-form" id="bookingForm" onsubmit="return handleBooking(event)">
-                    <input type="text" placeholder="Your name" required>
-                    <input type="email" placeholder="Email address" required>
-                    <select required>
-                        <option value="" disabled selected>I'm booking for...</option>
-                        <option>Restaurant table</option>
-                        <option>Hotel room</option>
-                        <option>Event / private</option>
-                    </select>
-                    <button type="submit">Check availability</button>
-                </form>
-                <p id="formFeedback" style="margin-top: 1.5rem; font-size: 1rem; color: #e5c687;"></p>
-            </div>
-        </section>
-    </main>
+    <section id="reservation">
+        <div class="container cta-section">
+            <h2>Secure your moment</h2>
+            <p style="margin-top: 0.5rem;">instant confirmation · free cancellation · concierge follow‑up</p>
+            <form class="reserve-form" id="bookingForm" onsubmit="return handleBooking(event)">
+                <input type="text" placeholder="Full name" required>
+                <input type="email" placeholder="Email" required>
+                <select required>
+                    <option value="" disabled selected>I am interested in</option>
+                    <option>Hotel room</option>
+                    <option>Restaurant table</option>
+                    <option>Private event</option>
+                    <option>Gift card</option>
+                </select>
+                <button type="submit">Check availability</button>
+            </form>
+            <p id="formFeedback" style="margin-top: 2rem; font-size: 1rem; min-height: 2rem; color: var(--gold-light);"></p>
+        </div>
+    </section>
 
-    <!-- footer / contact -->
     <footer class="footer" id="contact">
         <div class="footer-grid">
             <div class="footer-col">
                 <h4>Azure Bay</h4>
-                <p>123 Coastal Highway<br>Monterey, CA 93940</p>
-                <p><i class="fas fa-phone-alt"></i> +1 (831) 555 9800</p>
-                <p><i class="fas fa-envelope"></i> reserve@azurebay.com</p>
+                <p>3959 Pacific Coast Highway<br>Monterey, CA 93940</p>
+                <p><i class="fas fa-phone-alt"></i> +1 (831) 555 0199</p>
+                <p><i class="fas fa-envelope"></i> concierge@azurebay.com</p>
             </div>
             <div class="footer-col">
-                <h4>Explore</h4>
-                <a href="#rooms">Rooms & suites</a>
-                <a href="#dining">Restaurant & bar</a>
-                <a href="#about">About us</a>
-                <a href="#">Weddings & events</a>
+                <h4>Journey</h4>
+                <a href="#rooms">Ocean suites</a>
+                <a href="#dining">Restaurant & terrace</a>
+                <a href="#">Wellness & spa</a>
+                <a href="#">Events</a>
             </div>
             <div class="footer-col">
-                <h4>Support</h4>
-                <a href="#">FAQ</a>
-                <a href="#">Privacy policy</a>
-                <a href="#">Terms</a>
+                <h4>Info</h4>
+                <a href="#">Sustainability</a>
+                <a href="#">Press room</a>
+                <a href="#">Privacy & cookies</a>
                 <a href="#">Careers</a>
             </div>
             <div class="footer-col">
-                <h4>Follow us</h4>
+                <h4>Connect</h4>
                 <div class="social-icons">
                     <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                    <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
-                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="X"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#" aria-label="WeChat"><i class="fab fa-weixin"></i></a>
                 </div>
-                <p style="margin-top: 1.2rem;">Newsletter – sign up for offers</p>
+                <p style="margin-top: 1.5rem;">Subscribe to exclusive offers</p>
             </div>
         </div>
         <div class="copyright">
-            © 2025 Azure Bay Hotel & Restaurant. All rights reserved. Professional & reliable.
+            © 2025 Azure Bay Hotel & Restaurant. All rights reserved. Redefining luxury.
         </div>
     </footer>
 
-    <!-- simple interactivity: mobile menu + form feedback -->
     <script>
-        // mobile menu toggle
+        // Navbar background on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
         const menuToggle = document.getElementById('mobile-menu');
         const navLinks = document.getElementById('navLinks');
-        if (menuToggle) {
-            menuToggle.addEventListener('click', () => {
-                navLinks.classList.toggle('show');
-            });
-        }
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navLinks.classList.toggle('show');
+        });
 
-        // working booking form feedback (no actual submit)
+        // close on link click (mobile)
+        document.querySelectorAll('#navLinks a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 900) navLinks.classList.remove('show');
+            });
+        });
+
+        // Booking form handler (enhanced)
         function handleBooking(e) {
             e.preventDefault();
             const feedback = document.getElementById('formFeedback');
-            feedback.innerHTML = '✅ Thank you! A reservation specialist will respond within 15 minutes.';
-            feedback.style.color = '#e5c687';
-            // optional: reset highlights
+            feedback.innerHTML = '✨ Thank you. A member of our concierge team will reply within 12 minutes.';
+            feedback.style.color = '#dbb670';
             setTimeout(() => {
                 feedback.innerHTML = '';
             }, 5000);
-            return false; // prevent page reload
+            return false;
         }
 
-        // close mobile menu on link click (optional)
-        document.querySelectorAll('#navLinks a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth <= 768) {
-                    navLinks.classList.remove('show');
+        // optional smooth scroll for all anchor links (native fallback)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === "#" || href === "") return;
+                const target = document.querySelector(href);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
         });
     </script>
-
-    <!-- small style adjustment for active form -->
-    <style>
-        #formFeedback {
-            min-height: 2rem;
-            font-weight: 500;
-        }
-        /* ensure card links are clickable but not distracting */
-        .card {
-            cursor: pointer;
-        }
-        .nav-links a.active {
-            color: var(--gold);
-        }
-    </style>
+    <!-- Lightbox2 for potential gallery use (optional but adds lightweight) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
 </body>
 </html>
