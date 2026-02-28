@@ -25,534 +25,739 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="SushTech_favicon.ico">
 
-    <!-- Google Fonts Optimized -->
+    <!-- OPTIMIZED: Font loading strategy for better LCP -->
+    <!-- 1. Preconnect to Google Fonts domains (critical) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style"
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
-        onload="this.onload=null;this.rel='stylesheet'">
+    
+    <!-- 2. Preload critical font styles for hero section -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
+    
+    <!-- 3. Load fonts with display=swap to prevent invisible text -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" media="print" onload="this.media='all'">
     <noscript>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap">
     </noscript>
 
-    <!-- Bootstrap Deferred -->
-    <link rel="preload"
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-        as="style"
-        onload="this.onload=null;this.rel='stylesheet'">
+    <!-- OPTIMIZED: Bootstrap CSS - inline critical styles, defer rest -->
+    <style>
+        /* Critical Bootstrap grid and container styles for hero section */
+        .container {
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        @media (min-width: 576px) {
+            .container {
+                max-width: 540px;
+            }
+        }
+        @media (min-width: 768px) {
+            .container {
+                max-width: 720px;
+            }
+        }
+        @media (min-width: 992px) {
+            .container {
+                max-width: 960px;
+            }
+        }
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 1140px;
+            }
+        }
+        /* Critical text styles for hero */
+        h2, p {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+    </style>
+    
+    <!-- Defer non-critical Bootstrap CSS -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     </noscript>
 
-    <!-- Font Awesome Deferred -->
-    <link rel="preload"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-        as="style"
-        onload="this.onload=null;this.rel='stylesheet'">
+    <!-- OPTIMIZED: Font Awesome - inline critical icons for hero, defer rest -->
+    <style>
+        /* Critical icon styles for hero section (if any) */
+        .fab, .fas {
+            display: inline-block;
+            font-style: normal;
+            font-variant: normal;
+            text-rendering: auto;
+            line-height: 1;
+        }
+    </style>
+    
+    <!-- Defer Font Awesome with preload -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
-        <link rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     </noscript>
 
-    <!-- Your Main CSS -->
-    <link rel="stylesheet" href="style.css">
+    <!-- OPTIMIZED: Your main CSS - inline critical styles, defer rest -->
+    <style>
+        /* Critical CSS for hero section and layout */
+        :root {
+            --primary: #22D3EE;
+            --bg-dark: #0B1120;
+            --text-light: #F8FAFC;
+        }
+        
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 0;
+            background: linear-gradient(135deg, #0B1120 0%, #1A1F2F 100%);
+            overflow: hidden;
+        }
+        
+        .hero h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            color: #fff;
+        }
+        
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: #94A3B8;
+        }
+        
+        .highlight {
+            color: var(--primary);
+        }
+        
+        .container {
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Critical header styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(11, 17, 32, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+        
+        .menu-icon {
+            font-size: 30px;
+            cursor: pointer;
+            color: #fff;
+        }
+        
+        /* Button styles */
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-primary, .btn-secondary {
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: #0B1120;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+    
+    <!-- Defer main stylesheet -->
+    <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="style.css">
+    </noscript>
+
+    <!-- OPTIMIZED: Preload hero image for LCP -->
+    <link rel="preload" as="image" href="SushTech_logo_transparent1.webp" type="image/webp">
 </head>
 
 <body>
+    <!-- Header (critical for LCP - already in HTML) -->
+    <header>
+        <div class="logo">
+            <img src="SushTech_logo_transparent1.webp" loading="eager" fetchpriority="high" alt="SushTech Logo" width="50" height="50">
+        </div>
+
+        <div class="menu-icon" id="menuToggle">☰</div>
+
+        <!-- Right Side Panel Menu -->
+        <div class="side-panel" id="sidePanel">
+            <div class="panel-header">
+                <div class="panel-logo">
+                    <img src="SushTech_logo_transparent1.webp" loading="lazy" alt="Logo">
+                </div>
+                <div class="close-icon" id="closePanel">✕</div>
+            </div>
+            <nav class="panel-nav">
+                <a href="#home" class="panel-link">Home</a>
+                <a href="#pricing" class="panel-link">Pricing</a>
+                <a href="#why-choose" class="panel-link">Why Us</a>
+                <a href="#about" class="panel-link">About</a>
+                <a href="#contact" class="panel-link">Contact</a>
+            </nav>
+            <div class="panel-footer">
+                <p>© 2026 SushTech</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Overlay for when panel is open -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Hero Section - Static HTML for LCP (no JS needed) -->
+    <section id="home" class="hero">
+        <!-- Waves and particles (your custom animations) -->
+        <div class="waves">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+        </div>
+        
+        <div class="particles">
+            <!-- Row 1 - Top -->
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            
+            <!-- Row 2 - Middle -->
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            
+            <!-- Row 3 - Bottom -->
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        
+        <div class="container">
+            <!-- LCP element: Hero paragraph - now static with fetchpriority -->
+            <h2>
+                We Help <span class="highlight">Businesses Grow</span> Online
+            </h2>
+            <p fetchpriority="high">Professional web development company delivering fast, secure, and high-performance digital solutions.</p>
+            <div class="hero-buttons">
+                <a href="#contact" class="btn-primary">Get Free Consultation</a>
+                <a href="#pricing" class="btn-secondary">View Pricing</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rest of your sections (unchanged, but now with optimized loading) -->
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <h3>Simple, Transparent Pricing</h3>
+            <div class="pricing-subhead">Choose the plan that fits your needs — no negotiation, no hidden fees.</div>
+            
+            <!-- Pricing cards will be populated from config.js -->
+            <div class="pricing-grid" id="pricing-grid">
+                <!-- Dynamic content from JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section id="why-choose" class="why-choose">
+        <div class="container">
+            <h3>Why Choose SushTech?</h3>
+            <div class="choose-grid">
+                <div class="choose-item">
+                    <i class="fas fa-rocket"></i>
+                    <h4>Fast Delivery</h4>
+                    <p>We respect your time. Get your website live in days, not weeks.</p>
+                </div>
+                <div class="choose-item">
+                    <i class="fas fa-tag"></i>
+                    <h4>Affordable Pricing</h4>
+                    <p>High-quality solutions without breaking your bank.</p>
+                </div>
+                <div class="choose-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>Secure Hosting</h4>
+                    <p>Free SSL and daily backups for peace of mind.</p>
+                </div>
+                <div class="choose-item">
+                    <i class="fas fa-headset"></i>
+                    <h4>Local Support</h4>
+                    <p>We're based in India. Real people, fast response.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            
+            <!-- FIXED: Demo showcase with improved mobile responsiveness -->
+            <div class="demo-showcase">
+                <h3 class="demo-title">Our <span class="highlight">Demo</span> Websites</h3>
+                <p class="demo-subtitle">Explore our work across different categories</p>
+                
+                <!-- Scroll indicator for mobile -->
+                <div class="scroll-indicator-horizontal" id="scrollIndicator">
+                    <span class="scroll-arrow"><i class="fas fa-arrow-right"></i></span>
+                    <span class="scroll-text">Swipe to see more</span>
+                </div>
+                
+                <div class="demo-grid-wrapper">
+                    <div class="demo-grid" id="demoGrid">
+                        <!-- Wedding Demo Card -->
+                        <div class="demo-card card-scroll-highlight">
+                            <div class="demo-image">
+                                <img src="https://images.pexels.com/photos/169198/pexels-photo-169198.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Wedding Website Demo" loading="lazy" width="600" height="400">
+                                <div class="demo-overlay">
+                                    <span class="demo-category">Wedding</span>
+                                </div>
+                            </div>
+                            <div class="demo-info">
+                                <div class="demo-icon">💒</div>
+                                <h4>Wedding Invitation</h4>
+                                <p class="demo-desc">Beautiful, responsive wedding websites with RSVP, gallery & countdown</p>
+                                <div class="demo-features">
+                                    <span class="demo-feature"><i class="fas fa-envelope"></i> Invitation</span>
+                                    <span class="demo-feature"><i class="fas fa-heart"></i> RSVP</span>
+                                    <span class="demo-feature"><i class="fas fa-images"></i> Gallery</span>
+                                    <span class="demo-feature"><i class="fas fa-clock"></i> Countdown</span>
+                                </div>
+                                <div class="demo-buttons">
+                                    <button class="demo-btn primary" onclick="openDemoModal('wedding')">View Demos</button>
+                                    <a href="#contact" class="demo-btn secondary">Get Quote</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Small Business Demo Card -->
+                        <div class="demo-card card-scroll-highlight">
+                            <div class="demo-image">
+                                <img src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Small Business Demo" loading="lazy" width="600" height="400">
+                                <div class="demo-overlay">
+                                    <span class="demo-category">Business</span>
+                                </div>
+                            </div>
+                            <div class="demo-info">
+                                <div class="demo-icon">🏢</div>
+                                <h4>Small Business</h4>
+                                <p class="demo-desc">Professional websites for local businesses, startups & service providers</p>
+                                <div class="demo-features">
+                                    <span class="demo-feature"><i class="fas fa-envelope"></i> Contact</span>
+                                    <span class="demo-feature"><i class="fas fa-map-marker-alt"></i> Maps</span>
+                                    <span class="demo-feature"><i class="fas fa-bullhorn"></i> Advertisement</span>
+                                    <span class="demo-feature"><i class="fab fa-whatsapp"></i> WhatsApp</span>
+                                </div>
+                                <div class="demo-buttons">
+                                    <button class="demo-btn primary" onclick="openDemoModal('business')">View Demos</button>
+                                    <a href="#contact" class="demo-btn secondary">Get Quote</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- E-Commerce Demo Card -->
+                        <div class="demo-card card-scroll-highlight">
+                            <div class="demo-image">
+                                <img src="https://images.pexels.com/photos/34577/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=600" alt="E-Commerce Demo" loading="lazy" width="600" height="400">
+                                <div class="demo-overlay">
+                                    <span class="demo-category">E-Commerce</span>
+                                </div>
+                            </div>
+                            <div class="demo-info">
+                                <div class="demo-icon">🛍️</div>
+                                <h4>E-Commerce Store</h4>
+                                <p class="demo-desc">Full-featured online stores with payment gateway & product management</p>
+                                <div class="demo-features">
+                                    <span class="demo-feature"><i class="fas fa-shopping-cart"></i> Cart</span>
+                                    <span class="demo-feature"><i class="fas fa-credit-card"></i> Payments</span>
+                                    <span class="demo-feature"><i class="fas fa-box"></i> Inventory</span>
+                                    <span class="demo-feature"><i class="fas fa-truck"></i> Delivery</span>
+                                </div>
+                                <div class="demo-buttons">
+                                    <button class="demo-btn primary" onclick="openDemoModal('ecommerce')">View Demos</button>
+                                    <a href="#contact" class="demo-btn secondary">Get Quote</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Scroll dots indicator -->
+                <div class="scroll-dots" id="scrollDots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+            <div class="about-content">
+                <h3>About SushTech</h3>
+                <p>SushTech is a young and innovative digital agency founded by Sushant Kakade. We help businesses succeed online with high-quality, affordable and scalable digital solutions. Our team blends technology with creativity to deliver exceptional results.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wedding Demo Modal -->
+    <div class="demo-modal" id="weddingDemoModal">
+        <div class="demo-modal-content">
+            <div class="demo-modal-header">
+                <h3>Wedding <span class="highlight">Demos</span></h3>
+                <button class="demo-modal-close" onclick="closeModal('weddingDemoModal')">&times;</button>
+            </div>
+            <div class="demo-modal-body">
+                <p class="demo-modal-subtitle">Choose a wedding demo:</p>
+                <div class="demo-icons-grid">
+                    <!-- Wedding Demo 1 -->
+                    <div class="demo-icon-card card-scroll-highlight" onclick="openDemoLink('wedding1')">
+                        <div class="demo-icon-wrapper">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <span>Traditional</span>
+                        <small class="demo-type">Aarav & Sneha</small>
+                    </div>
+                    
+                    <!-- Wedding Demo 2 -->
+                    <div class="demo-icon-card card-scroll-highlight" onclick="openDemoLink('wedding2')">
+                        <div class="demo-icon-wrapper">
+                            <i class="fas fa-ring"></i>
+                        </div>
+                        <span>Modern</span>
+                        <small class="demo-type">Rohan & Priya</small>
+                    </div>
+                    
+                    <!-- Wedding Demo 3 -->
+                    <div class="demo-icon-card card-scroll-highlight" onclick="openDemoLink('wedding3')">
+                        <div class="demo-icon-wrapper">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <span>Garden</span>
+                        <small class="demo-type">Vikram & Anjali</small>
+                    </div>
+                    
+                    <!-- Wedding Demo 4 -->
+                    <div class="demo-icon-card card-scroll-highlight" onclick="openDemoLink('wedding4')">
+                        <div class="demo-icon-wrapper">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <span>Premium</span>
+                        <small class="demo-type">सखू & शुभम</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Business Demo Modal -->
+    <div class="demo-modal" id="businessDemoModal">
+        <div class="demo-modal-content">
+            <div class="demo-modal-header">
+                <h3>Business <span class="highlight">Demos</span></h3>
+                <button class="demo-modal-close" onclick="closeModal('businessDemoModal')">&times;</button>
+            </div>
+            <div class="demo-modal-body">
+                <p class="demo-modal-subtitle">Choose a business demo:</p>
+                <div class="demo-icons-grid">
+                    <!-- Business Demo 1 -->
+                    <div class="demo-icon-card card-scroll-highlight" onclick="openDemoLink('business1')">
+                        <div class="demo-icon-wrapper">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <span>Startup</span>
+                        <small class="demo-type">Local Business</small>
+                    </div>
+                    
+                    <!-- Business Demo 2 -->
+                    <div class="demo-icon-card card-scroll-highlight" onclick="openDemoLink('business2')">
+                        <div class="demo-icon-wrapper">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <span>Corporate</span>
+                        <small class="demo-type">Company Website</small>
+                    </div>
+                    
+                    <!-- Business Demo 3 -->
+                    <div class="demo-icon-card card-scroll-highlight" onclick="openDemoLink('business3')">
+                        <div class="demo-icon-wrapper">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <span>Portfolio</span>
+                        <small class="demo-type">Agency Site</small>
+                    </div>
+                    
+                    <!-- Business Demo 4 -->
+                    <div class="demo-icon-card card-scroll-highlight" onclick="openDemoLink('business4')">
+                        <div class="demo-icon-wrapper">
+                            <i class="fas fa-hotel"></i>
+                        </div>
+                        <span>Restaurant</span>
+                        <small class="demo-type">Food Business</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- E-Commerce Demo Modal -->
+    <div class="demo-modal" id="ecommerceDemoModal">
+        <div class="demo-modal-content">
+            <div class="demo-modal-header">
+                <h3>E-Commerce <span class="highlight">Demos</span></h3>
+                <button class="demo-modal-close" onclick="closeModal('ecommerceDemoModal')">&times;</button>
+            </div>
+            <div class="demo-modal-body">
+                <p class="demo-modal-subtitle">Choose an e-commerce demo:</p>
+                <div class="demo-icons-grid">
+                    <!-- E-Commerce Demo 1 -->
+                    <div class="demo-icon-card card-scroll-highlight" onclick="openDemoLink('ecommerce1')">
+                        <div class="demo-icon-wrapper">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <span>Fashion</span>
+                        <small class="demo-type">Clothing Store</small>
+                    </div>
+                    
+                    <!-- E-Commerce Demo 2 -->
+                    <div class="demo-icon-card card-scroll-highlight" onclick="openDemoLink('ecommerce2')">
+                        <div class="demo-icon-wrapper">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <span>Electronics</span>
+                        <small class="demo-type">Gadget Shop</small>
+                    </div>
+                    
+                    <!-- E-Commerce Demo 3 -->
+                    <div class="demo-icon-card card-scroll-highlight" onclick="openDemoLink('ecommerce3')">
+                        <div class="demo-icon-wrapper">
+                            <i class="fas fa-couch"></i>
+                        </div>
+                        <span>Furniture</span>
+                        <small class="demo-type">Home Decor</small>
+                    </div>
+                    
+                    <!-- E-Commerce Demo 4 -->
+                    <div class="demo-icon-card card-scroll-highlight" onclick="openDemoLink('ecommerce4')">
+                        <div class="demo-icon-wrapper">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <span>Jewelry</span>
+                        <small class="demo-type">Accessories</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h3>Contact Us</h3>
+            
+            <!-- Business Email -->
+            <a href="mailto:contact@sushtech.in" class="business-email">
+                <i class="fas fa-envelope"></i> contact@sushtech.in
+            </a>
+
+            <div class="contact-wrapper">
+                <!-- Contact Info -->
+                <div class="contact-info">
+                    <p><i class="fas fa-phone-alt"></i> <span>+91 90214 96257</span></p>
+                    <p><i class="fab fa-whatsapp"></i> <span>+91 90214 96257 (WhatsApp)</span></p>
+                    <p><i class="far fa-clock"></i> <span>Mon-Fri: 9 AM - 6 PM</span></p>
+                    <a href="https://wa.me/919021496257?text=Hello%20SushTech%2C%20I'm%20interested%20in%20your%20services" 
+                       target="_blank" class="chat-btn">
+                        <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="professional-footer">
+        <div class="container">
+            <!-- Main Footer Grid -->
+            <div class="footer-grid">
+                <!-- Column 1 - Company -->
+                <div class="footer-col">
+                    <h5>Company</h5>
+                    <ul>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#why-choose">Why Choose Us</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 2 - Services -->
+                <div class="footer-col">
+                    <h5>Services</h5>
+                    <ul>
+                        <li><a href="#pricing">Website Development</a></li>
+                        <li><a href="#pricing">E-Commerce Solutions</a></li>
+                        <li><a href="#pricing">SEO Services</a></li>
+                        <li><a href="#pricing">Wedding Websites</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3 - Support -->
+                <div class="footer-col">
+                    <h5>Support</h5>
+                    <ul>
+                        <li><a href="#contact">Contact Us</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4 - Connect -->
+                <div class="footer-col">
+                    <h5>Connect</h5>
+                    <div class="social-links">
+                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                    </div>
+                    <div class="mt-3">
+                        <span class="badge">📍 Pune, India</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Footer -->
+            <div class="footer-bottom">
+                <div class="copyright">
+                    <p>© 2025 SushTech. All rights reserved. | Website Developer in Pune</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to Top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/919021496257?text=Hello%20SushTech%2C%20I'm%20interested%20in%20your%20services" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- OPTIMIZED: JavaScript loading strategy -->
+    <!-- Defer all JavaScript with async for critical -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="config.js" defer></script>
+    <script src="script.js" defer></script>
     
-<header>
-    <div class="logo">
-        <img src="SushTech_logo_transparent1.webp" loading="lazy" alt="Logo">
-    </div>
-
-    <div class="menu-icon" id="menuToggle">☰</div>
-
-    <!-- Right Side Panel Menu -->
-    <div class="side-panel" id="sidePanel">
-        <div class="panel-header">
-            <div class="panel-logo">
-                <img src="SushTech_logo_transparent1.webp" loading="lazy" alt="Logo">
-            </div>
-            <div class="close-icon" id="closePanel">✕</div>
-        </div>
-        <nav class="panel-nav">
-            <a href="#home" class="panel-link">Home</a>
-            <a href="#pricing" class="panel-link">Pricing</a>
-            <a href="#why-choose" class="panel-link">Why Us</a>
-            <a href="#about" class="panel-link">About</a>
-            <a href="#contact" class="panel-link">Contact</a>
-        </nav>
-        <div class="panel-footer">
-            <p>© 2026 SushTech</p>
-        </div>
-    </div>
-</header>
-
-<!-- Overlay for when panel is open -->
-<div class="overlay" id="overlay"></div>
-
-<!-- Hero Section -->
-<section id="home" class="hero">
-    <!-- Waves and particles (your custom animations) -->
-    <div class="waves">
-        <div class="wave"></div>
-        <div class="wave"></div>
-        <div class="wave"></div>
-    </div>
-    
-    <div class="particles">
-        <!-- Row 1 - Top -->
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        
-        <!-- Row 2 - Middle -->
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        
-        <!-- Row 3 - Bottom -->
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-    </div>
-    
-    <div class="container">
-        <h2>
-            We Help <span class="highlight">Businesses Grow</span> Online
-        </h2>
-        <p>Professional web development company delivering fast, secure, and high-performance digital solutions.</p>
-        <div class="hero-buttons">
-            <a href="#contact" class="btn-primary">Get Free Consultation</a>
-            <a href="#pricing" class="btn-secondary">View Pricing</a>
-        </div>
-    </div>
-</section>
-
-<!-- Pricing Section -->
-<section id="pricing" class="pricing">
-    <div class="container">
-        <h3>Simple, Transparent Pricing</h3>
-        <div class="pricing-subhead">Choose the plan that fits your needs — no negotiation, no hidden fees.</div>
-        
-        <!-- Pricing cards will be populated from config.js -->
-        <div class="pricing-grid" id="pricing-grid">
-            <!-- Dynamic content from JavaScript -->
-        </div>
-    </div>
-</section>
-
-<!-- Why Choose Us Section -->
-<section id="why-choose" class="why-choose">
-    <div class="container">
-        <h3>Why Choose SushTech?</h3>
-        <div class="choose-grid">
-            <div class="choose-item">
-                <i class="fas fa-rocket"></i>
-                <h4>Fast Delivery</h4>
-                <p>We respect your time. Get your website live in days, not weeks.</p>
-            </div>
-            <div class="choose-item">
-                <i class="fas fa-tag"></i>
-                <h4>Affordable Pricing</h4>
-                <p>High-quality solutions without breaking your bank.</p>
-            </div>
-            <div class="choose-item">
-                <i class="fas fa-shield-alt"></i>
-                <h4>Secure Hosting</h4>
-                <p>Free SSL and daily backups for peace of mind.</p>
-            </div>
-            <div class="choose-item">
-                <i class="fas fa-headset"></i>
-                <h4>Local Support</h4>
-                <p>We're based in India. Real people, fast response.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- About Section -->
-<section id="about" class="about">
-    <div class="container">
-        
-        <!-- FIXED: Demo showcase with improved mobile responsiveness -->
-        <div class="demo-showcase">
-            <h3 class="demo-title">Our <span class="highlight">Demo</span> Websites</h3>
-            <p class="demo-subtitle">Explore our work across different categories</p>
+    <!-- OPTIMIZED: Inline minimal critical JS for early interactions -->
+    <script>
+        // Minimal critical JavaScript for menu toggle (executes immediately)
+        (function() {
+            // Only initialize if DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initMinimal);
+            } else {
+                initMinimal();
+            }
             
-            <!-- Scroll indicator for mobile -->
-            <div class="scroll-indicator-horizontal" id="scrollIndicator">
-                <span class="scroll-arrow"><i class="fas fa-arrow-right"></i></span>
-                <span class="scroll-text">Swipe to see more</span>
-            </div>
-            
-            <div class="demo-grid-wrapper">
-                <div class="demo-grid" id="demoGrid">
-                    <!-- Wedding Demo Card -->
-                    <div class="demo-card card-scroll-highlight">
-                        <div class="demo-image">
-                            <img src="https://images.pexels.com/photos/169198/pexels-photo-169198.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Wedding Website Demo" loading="lazy">
-                            <div class="demo-overlay">
-                                <span class="demo-category">Wedding</span>
-                            </div>
-                        </div>
-                        <div class="demo-info">
-                            <div class="demo-icon">💒</div>
-                            <h4>Wedding Invitation</h4>
-                            <p class="demo-desc">Beautiful, responsive wedding websites with RSVP, gallery & countdown</p>
-                            <div class="demo-features">
-                                <span class="demo-feature"><i class="fas fa-envelope"></i> Invitation</span>
-                                <span class="demo-feature"><i class="fas fa-heart"></i> RSVP</span>
-                                <span class="demo-feature"><i class="fas fa-images"></i> Gallery</span>
-                                <span class="demo-feature"><i class="fas fa-clock"></i> Countdown</span>
-                            </div>
-                            <div class="demo-buttons">
-                                <button class="demo-btn primary" onclick="openDemoModal('wedding')">View Demos</button>
-                                <a href="#contact" class="demo-btn secondary">Get Quote</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Small Business Demo Card -->
-                    <div class="demo-card card-scroll-highlight">
-                        <div class="demo-image">
-                            <img src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Small Business Demo" loading="lazy">
-                            <div class="demo-overlay">
-                                <span class="demo-category">Business</span>
-                            </div>
-                        </div>
-                        <div class="demo-info">
-                            <div class="demo-icon">🏢</div>
-                            <h4>Small Business</h4>
-                            <p class="demo-desc">Professional websites for local businesses, startups & service providers</p>
-                            <div class="demo-features">
-                                <span class="demo-feature"><i class="fas fa-envelope"></i> Contact</span>
-                                <span class="demo-feature"><i class="fas fa-map-marker-alt"></i> Maps</span>
-                                <span class="demo-feature"><i class="fas fa-bullhorn"></i> Advertisement</span>
-                                <span class="demo-feature"><i class="fab fa-whatsapp"></i> WhatsApp</span>
-                            </div>
-                            <div class="demo-buttons">
-                                <button class="demo-btn primary" onclick="openDemoModal('business')">View Demos</button>
-                                <a href="#contact" class="demo-btn secondary">Get Quote</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- E-Commerce Demo Card -->
-                    <div class="demo-card card-scroll-highlight">
-                        <div class="demo-image">
-                            <img src="https://images.pexels.com/photos/34577/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=600" alt="E-Commerce Demo" loading="lazy">
-                            <div class="demo-overlay">
-                                <span class="demo-category">E-Commerce</span>
-                            </div>
-                        </div>
-                        <div class="demo-info">
-                            <div class="demo-icon">🛍️</div>
-                            <h4>E-Commerce Store</h4>
-                            <p class="demo-desc">Full-featured online stores with payment gateway & product management</p>
-                            <div class="demo-features">
-                                <span class="demo-feature"><i class="fas fa-shopping-cart"></i> Cart</span>
-                                <span class="demo-feature"><i class="fas fa-credit-card"></i> Payments</span>
-                                <span class="demo-feature"><i class="fas fa-box"></i> Inventory</span>
-                                <span class="demo-feature"><i class="fas fa-truck"></i> Delivery</span>
-                            </div>
-                            <div class="demo-buttons">
-                                <button class="demo-btn primary" onclick="openDemoModal('ecommerce')">View Demos</button>
-                                <a href="#contact" class="demo-btn secondary">Get Quote</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Scroll dots indicator -->
-            <div class="scroll-dots" id="scrollDots">
-                <span class="dot active"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-            </div>
-        </div>
-        <div class="about-content">
-            <h3>About SushTech</h3>
-            <p>SushTech is a young and innovative digital agency founded by Sushant Kakade. We help businesses succeed online with high-quality, affordable and scalable digital solutions. Our team blends technology with creativity to deliver exceptional results.</p>
-        </div>
-    </div>
-</section>
-
-<!-- Wedding Demo Modal -->
-<div class="demo-modal" id="weddingDemoModal">
-    <div class="demo-modal-content">
-        <div class="demo-modal-header">
-            <h3>Wedding <span class="highlight">Demos</span></h3>
-            <button class="demo-modal-close" onclick="closeModal('weddingDemoModal')">&times;</button>
-        </div>
-        <div class="demo-modal-body">
-            <p class="demo-modal-subtitle">Choose a wedding demo:</p>
-            <div class="demo-icons-grid">
-                <!-- Wedding Demo 1 -->
-                <div class="demo-icon-card card-scroll-highlight" onclick="openDemoLink('wedding1')">
-                    <div class="demo-icon-wrapper">
-                        <i class="fas fa-heart"></i>
-                    </div>
-                    <span>Traditional</span>
-                    <small class="demo-type">Aarav & Sneha</small>
-                </div>
+            function initMinimal() {
+                const menuToggle = document.getElementById('menuToggle');
+                const sidePanel = document.getElementById('sidePanel');
+                const closePanel = document.getElementById('closePanel');
+                const overlay = document.getElementById('overlay');
                 
-                <!-- Wedding Demo 2 -->
-                <div class="demo-icon-card card-scroll-highlight" onclick="openDemoLink('wedding2')">
-                    <div class="demo-icon-wrapper">
-                        <i class="fas fa-ring"></i>
-                    </div>
-                    <span>Modern</span>
-                    <small class="demo-type">Rohan & Priya</small>
-                </div>
+                if (!menuToggle || !sidePanel || !closePanel || !overlay) return;
                 
-                <!-- Wedding Demo 3 -->
-                <div class="demo-icon-card card-scroll-highlight" onclick="openDemoLink('wedding3')">
-                    <div class="demo-icon-wrapper">
-                        <i class="fas fa-leaf"></i>
-                    </div>
-                    <span>Garden</span>
-                    <small class="demo-type">Vikram & Anjali</small>
-                </div>
+                menuToggle.addEventListener('click', function() {
+                    sidePanel.classList.add('active');
+                    overlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
                 
-                <!-- Wedding Demo 4 -->
-                <div class="demo-icon-card card-scroll-highlight" onclick="openDemoLink('wedding4')">
-                    <div class="demo-icon-wrapper">
-                        <i class="fas fa-crown"></i>
-                    </div>
-                    <span>Premium</span>
-                    <small class="demo-type">सखू & शुभम</small>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Business Demo Modal -->
-<div class="demo-modal" id="businessDemoModal">
-    <div class="demo-modal-content">
-        <div class="demo-modal-header">
-            <h3>Business <span class="highlight">Demos</span></h3>
-            <button class="demo-modal-close" onclick="closeModal('businessDemoModal')">&times;</button>
-        </div>
-        <div class="demo-modal-body">
-            <p class="demo-modal-subtitle">Choose a business demo:</p>
-            <div class="demo-icons-grid">
-                <!-- Business Demo 1 -->
-                <div class="demo-icon-card card-scroll-highlight" onclick="openDemoLink('business1')">
-                    <div class="demo-icon-wrapper">
-                        <i class="fas fa-store"></i>
-                    </div>
-                    <span>Startup</span>
-                    <small class="demo-type">Local Business</small>
-                </div>
+                closePanel.addEventListener('click', function() {
+                    sidePanel.classList.remove('active');
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
                 
-                <!-- Business Demo 2 -->
-                <div class="demo-icon-card card-scroll-highlight" onclick="openDemoLink('business2')">
-                    <div class="demo-icon-wrapper">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <span>Corporate</span>
-                    <small class="demo-type">Company Website</small>
-                </div>
-                
-                <!-- Business Demo 3 -->
-                <div class="demo-icon-card card-scroll-highlight" onclick="openDemoLink('business3')">
-                    <div class="demo-icon-wrapper">
-                        <i class="fas fa-briefcase"></i>
-                    </div>
-                    <span>Portfolio</span>
-                    <small class="demo-type">Agency Site</small>
-                </div>
-                
-                <!-- Business Demo 4 -->
-                <div class="demo-icon-card card-scroll-highlight" onclick="openDemoLink('business4')">
-                    <div class="demo-icon-wrapper">
-                        <i class="fas fa-hotel"></i>
-                    </div>
-                    <span>Restaurant</span>
-                    <small class="demo-type">Food Business</small>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- E-Commerce Demo Modal -->
-<div class="demo-modal" id="ecommerceDemoModal">
-    <div class="demo-modal-content">
-        <div class="demo-modal-header">
-            <h3>E-Commerce <span class="highlight">Demos</span></h3>
-            <button class="demo-modal-close" onclick="closeModal('ecommerceDemoModal')">&times;</button>
-        </div>
-        <div class="demo-modal-body">
-            <p class="demo-modal-subtitle">Choose an e-commerce demo:</p>
-            <div class="demo-icons-grid">
-                <!-- E-Commerce Demo 1 -->
-                <div class="demo-icon-card card-scroll-highlight" onclick="openDemoLink('ecommerce1')">
-                    <div class="demo-icon-wrapper">
-                        <i class="fas fa-tshirt"></i>
-                    </div>
-                    <span>Fashion</span>
-                    <small class="demo-type">Clothing Store</small>
-                </div>
-                
-                <!-- E-Commerce Demo 2 -->
-                <div class="demo-icon-card card-scroll-highlight" onclick="openDemoLink('ecommerce2')">
-                    <div class="demo-icon-wrapper">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <span>Electronics</span>
-                    <small class="demo-type">Gadget Shop</small>
-                </div>
-                
-                <!-- E-Commerce Demo 3 -->
-                <div class="demo-icon-card card-scroll-highlight" onclick="openDemoLink('ecommerce3')">
-                    <div class="demo-icon-wrapper">
-                        <i class="fas fa-couch"></i>
-                    </div>
-                    <span>Furniture</span>
-                    <small class="demo-type">Home Decor</small>
-                </div>
-                
-                <!-- E-Commerce Demo 4 -->
-                <div class="demo-icon-card card-scroll-highlight" onclick="openDemoLink('ecommerce4')">
-                    <div class="demo-icon-wrapper">
-                        <i class="fas fa-gem"></i>
-                    </div>
-                    <span>Jewelry</span>
-                    <small class="demo-type">Accessories</small>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Contact Section -->
-<section id="contact" class="contact">
-    <div class="container">
-        <h3>Contact Us</h3>
-        
-        <!-- Business Email -->
-        <a href="mailto:contact@sushtech.in" class="business-email">
-            <i class="fas fa-envelope"></i> contact@sushtech.in
-        </a>
-
-        <div class="contact-wrapper">
-            <!-- Contact Info -->
-            <div class="contact-info">
-                <p><i class="fas fa-phone-alt"></i> <span>+91 90214 96257</span></p>
-                <p><i class="fab fa-whatsapp"></i> <span>+91 90214 96257 (WhatsApp)</span></p>
-                <p><i class="far fa-clock"></i> <span>Mon-Fri: 9 AM - 6 PM</span></p>
-                <a href="https://wa.me/919021496257?text=Hello%20SushTech%2C%20I'm%20interested%20in%20your%20services" 
-                   target="_blank" class="chat-btn">
-                    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<footer class="professional-footer">
-    <div class="container">
-        <!-- Main Footer Grid -->
-        <div class="footer-grid">
-            <!-- Column 1 - Company -->
-            <div class="footer-col">
-                <h5>Company</h5>
-                <ul>
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#why-choose">Why Choose Us</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </div>
-            
-            <!-- Column 2 - Services -->
-            <div class="footer-col">
-                <h5>Services</h5>
-                <ul>
-                    <li><a href="#pricing">Website Development</a></li>
-                    <li><a href="#pricing">E-Commerce Solutions</a></li>
-                    <li><a href="#pricing">SEO Services</a></li>
-                    <li><a href="#pricing">Wedding Websites</a></li>
-                </ul>
-            </div>
-            
-            <!-- Column 3 - Support -->
-            <div class="footer-col">
-                <h5>Support</h5>
-                <ul>
-                    <li><a href="#contact">Contact Us</a></li>
-                    <li><a href="#">FAQs</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                </ul>
-            </div>
-            
-            <!-- Column 4 - Connect -->
-            <div class="footer-col">
-                <h5>Connect</h5>
-                <div class="social-links">
-                    <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-                </div>
-                <div class="mt-3">
-                    <span class="badge">📍 Pune, India</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Bottom Footer -->
-        <div class="footer-bottom">
-            <div class="copyright">
-                <p>© 2025 SushTech. All rights reserved. | Website Developer in Pune</p>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<!-- Back to Top Button -->
-<button id="backToTop" class="back-to-top" aria-label="Back to Top">
-    <i class="fas fa-arrow-up"></i>
-</button>
-
-<!-- Floating WhatsApp Button -->
-<a href="https://wa.me/919021496257?text=Hello%20SushTech%2C%20I'm%20interested%20in%20your%20services" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
-    <i class="fab fa-whatsapp"></i>
-</a>
-
-<!-- Bootstrap JS Bundle (includes Popper) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Configuration and Scripts -->
-<script src="config.js" defer></script>
-<script src="script.js" defer></script>
+                overlay.addEventListener('click', function() {
+                    sidePanel.classList.remove('active');
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            }
+        })();
+    </script>
 </body>
 </html>
-
-
