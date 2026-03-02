@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElectroGrid India | premium gadget store</title>
+    <!-- Font Awesome 5 (free) for icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <!-- Google Fonts: Inter (modern, professional) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f7fb;
+            color: #1e293b;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* header / navbar */
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #eef2f6;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 80px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.8rem;
+            letter-spacing: -0.5px;
+            color: #0f172a;
+        }
+
+        .logo i {
+            color: #3b82f6;
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            font-weight: 500;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #334155;
+            transition: color 0.2s;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #3b82f6;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 1.5rem;
+            color: #334155;
+        }
+
+        .nav-icons i {
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .nav-icons i:hover {
+            color: #3b82f6;
+        }
+
+        .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ef4444;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        /* hero section */
+        .hero {
+            background: linear-gradient(145deg, #f1f5f9 0%, #ffffff 100%);
+            border-radius: 2rem;
+            margin: 2rem auto 3rem;
+            padding: 3.5rem 3rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.03);
+        }
+
+        .hero-content {
+            flex: 1 1 350px;
+        }
+
+        .hero-content span.tag {
+            background-color: #dbeafe;
+            color: #1e40af;
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            display: inline-block;
+            margin-bottom: 1.2rem;
+        }
+
+        .hero-content h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -1px;
+            color: #0f172a;
+            margin-bottom: 1.2rem;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            color: #475569;
+            max-width: 500px;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            background-color: #0f172a;
+            color: white;
+            font-weight: 600;
+            padding: 0.9rem 2.2rem;
+            border-radius: 60px;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .btn i {
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: #3b82f6;
+        }
+
+        .hero-image {
+            flex: 1 1 300px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            width: 350px;
+            filter: drop-shadow(0 20px 20px rgba(0, 80, 200, 0.15));
+        }
+
+        /* section titles */
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 2rem;
+        }
+
+        .section-title h2 {
+            font-weight: 700;
+            font-size: 2rem;
+            color: #0f172a;
+        }
+
+        .section-title a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        /* categories */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 2rem;
+            padding: 1.8rem 1rem;
+            text-align: center;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.02);
+            transition: all 0.2s;
+            border: 1px solid #eef2f6;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-6px);
+            border-color: #b1d0ff;
+            box-shadow: 0 18px 30px rgba(59,130,246,0.08);
+        }
+
+        .category-card i {
+            font-size: 2.6rem;
+            color: #3b82f6;
+            margin-bottom: 0.8rem;
+        }
+
+        .category-card span {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* search bar */
+        .search-container {
+            background: white;
+            border-radius: 60px;
+            padding: 0.3rem 0.3rem 0.3rem 1.5rem;
+            display: flex;
+            align-items: center;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        .search-container input {
+            flex: 1;
+            border: none;
+            padding: 0.8rem 0;
+            font-size: 1rem;
+            outline: none;
+            background: transparent;
+        }
+
+        .search-container button {
+            background: #3b82f6;
+            border: none;
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .search-container button:hover {
+            background: #2563eb;
+        }
+
+        /* product grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .product-card {
+            background: #ffffff;
+            border-radius: 1.8rem;
+            padding: 1.5rem 1.5rem 1.8rem;
+            transition: 0.2s ease;
+            border: 1px solid #f0f4fa;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.02);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .product-card:hover {
+            border-color: #d9e9ff;
+            box-shadow: 0 20px 28px -8px rgba(59,130,246,0.15);
+        }
+
+        .product-badge {
+            background: #fee2e2;
+            color: #b91c1c;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            align-self: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 170px;
+            object-fit: contain;
+            margin-bottom: 1.2rem;
+            mix-blend-mode: multiply;
+        }
+
+        .product-title {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: #0f172a;
+        }
+
+        .product-category {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .product-category i {
+            font-size: 0.7rem;
+            color: #3b82f6;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: auto;
+            padding-top: 1rem;
+        }
+
+        .current-price {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #0f172a;
+        }
+
+        .old-price {
+            font-size: 0.95rem;
+            color: #94a3b8;
+            text-decoration: line-through;
+            margin-left: 6px;
+            font-weight: 400;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .btn-add, .btn-fav {
+            background: none;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 40px;
+            width: 42px;
+            height: 42px;
+            font-size: 1.2rem;
+            color: #334155;
+            cursor: pointer;
+            transition: 0.15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-add:hover {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            color: white;
+        }
+
+        .btn-fav:hover {
+            background: #f43f5e;
+            border-color: #f43f5e;
+            color: white;
+        }
+
+        .btn-fav.active {
+            background: #f43f5e;
+            border-color: #f43f5e;
+            color: white;
+        }
+
+        /* offer banner */
+        .offer-banner {
+            background: linear-gradient(135deg, #172554, #1e3a8a);
+            border-radius: 2rem;
+            padding: 3rem 4rem;
+            margin: 4rem 0;
+            color: white;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .offer-text h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .offer-text p {
+            opacity: 0.85;
+            margin-bottom: 1.5rem;
+            max-width: 400px;
+        }
+
+        .offer-btn {
+            background: white;
+            color: #0f172a;
+            border-radius: 60px;
+            padding: 0.9rem 2.5rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        .offer-btn:hover {
+            background: #f0f4ff;
+            transform: scale(1.02);
+        }
+
+        .offer-code {
+            background: rgba(255,255,255,0.15);
+            padding: 0.6rem 1.8rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+        }
+
+        /* back to top button */
+        #backToTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #0f172a;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            border: none;
+            transition: 0.2s;
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #backToTop.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #backToTop:hover {
+            background: #3b82f6;
+            transform: translateY(-4px);
+        }
+
+        /* modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h3 {
+            font-size: 1.5rem;
+            color: #0f172a;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #64748b;
+        }
+
+        .cart-item, .wishlist-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .cart-item-info, .wishlist-item-info {
+            flex: 1;
+        }
+
+        .cart-item-title, .wishlist-item-title {
+            font-weight: 600;
+        }
+
+        .cart-item-price, .wishlist-item-price {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+
+        .remove-item {
+            color: #ef4444;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .cart-total {
+            margin-top: 1.5rem;
+            text-align: right;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .profile-info {
+            text-align: center;
+        }
+
+        .profile-info i {
+            font-size: 4rem;
+            color: #3b82f6;
+            margin-bottom: 1rem;
+        }
+
+        .profile-info p {
+            margin: 0.5rem 0;
+            color: #64748b;
+        }
+
+        .login-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        /* footer */
+        footer {
+            background-color: #ffffff;
+            border-top: 1px solid #e6edf5;
+            padding: 3rem 0 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .footer-col p {
+            color: #475569;
+            margin: 1rem 0 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        .social-icons i {
+            font-size: 1.5rem;
+            color: #64748b;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+
+        .social-icons i:hover {
+            color: #3b82f6;
+        }
+
+        .footer-col h4 {
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            color: #0f172a;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 0.7rem;
+        }
+
+        .footer-col a {
+            text-decoration: none;
+            color: #475569;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        .footer-col a:hover {
+            color: #3b82f6;
+        }
+
+        .copyright {
+            text-align: center;
+            border-top: 1px solid #e9eef3;
+            padding-top: 2rem;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        /* responsive tweaks */
+        @media (max-width: 680px) {
+            .nav-links {
+                display: none;
+            }
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+            .offer-banner {
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- sticky navbar -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <i class="fas fa-microchip"></i>
+                <span>ElectroGrid</span>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a class="nav-link" data-page="home">Home</a>
+                <a class="nav-link" data-page="shop">Shop</a>
+                <a class="nav-link" data-page="deals">Deals</a>
+                <a class="nav-link" data-page="support">Support</a>
+            </div>
+            <div class="nav-icons">
+                <i class="fas fa-search" id="searchIcon"></i>
+                <i class="far fa-heart" id="wishlistIcon"><span class="badge" id="wishlistCount">0</span></i>
+                <i class="fas fa-shopping-cart" id="cartIcon"><span class="badge" id="cartCount">0</span></i>
+                <i class="far fa-user" id="userIcon"></i>
+            </div>
+        </div>
+    </header>
+
+    <main class="container" id="mainContent">
+        <!-- hero section -->
+        <section class="hero" id="heroSection">
+            <div class="hero-content">
+                <span class="tag">⚡ FASTEST DELIVERY IN INDIA · UP TO 40% OFF</span>
+                <h1>Sound. Vision. Speed.</h1>
+                <p>Premium gadgets engineered for the future. Latest tech with Indian warranty and GST billing.</p>
+                <a href="#" class="btn" id="exploreBtn">Explore bestsellers <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="hero-image">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23f1f5f9'/%3E%3Ccircle cx='200' cy='160' r='60' fill='%23333' /%3E%3Ccircle cx='200' cy='160' r='50' fill='%231e293b' /%3E%3Cpath d='M110 250 L290 250 L270 320 L130 320 Z' fill='%233b82f6' opacity='0.9'/%3E%3Crect x='170' y='260' width='60' height='30' rx='8' fill='%23facc15' /%3E%3Ccircle cx='140' cy='300' r='16' fill='%23222' /%3E%3Ccircle cx='260' cy='300' r='16' fill='%23222' /%3E%3Ctext x='150' y='160' fill='%23ffffff' font-size='35' font-weight='bold' font-family='monospace'%3E⚡%3C/text%3E%3C/svg%3E"
+                     alt="gadget illustration">
+            </div>
+        </section>
+
+        <!-- search bar -->
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search for gadgets..." value="">
+            <button id="searchBtn">Search</button>
+        </div>
+
+        <!-- categories -->
+        <div class="section-title">
+            <h2>Shop by category</h2>
+            <a class="view-all-link" data-cat="all">View all <i class="fas fa-chevron-right" style="font-size:0.8rem;"></i></a>
+        </div>
+        <div class="categories">
+            <div class="category-card" data-category="smartphones"><i class="fas fa-mobile-alt"></i><span>Smartphones</span></div>
+            <div class="category-card" data-category="laptops"><i class="fas fa-laptop"></i><span>Laptops</span></div>
+            <div class="category-card" data-category="audio"><i class="fas fa-headphones"></i><span>Audio</span></div>
+            <div class="category-card" data-category="tablets"><i class="fas fa-tablet-alt"></i><span>Tablets</span></div>
+            <div class="category-card" data-category="wearables"><i class="fas fa-clock"></i><span>Wearables</span></div>
+            <div class="category-card" data-category="accessories"><i class="fas fa-plug"></i><span>Accessories</span></div>
+        </div>
+
+        <!-- dynamic section title & product grid -->
+        <div class="section-title" id="dynamicTitle">
+            <h2>🔥 New Arrivals</h2>
+            <a class="view-all-link" data-cat="all">All products</a>
+        </div>
+
+        <div class="product-grid" id="productGrid">
+            <!-- products will be injected via javascript -->
+        </div>
+
+        <!-- promo banner -->
+        <section class="offer-banner">
+            <div class="offer-text">
+                <h3>Member exclusive</h3>
+                <p>Extra 10% off on audio & wearables with code</p>
+                <button class="offer-btn" id="joinBtn">Join free →</button>
+            </div>
+            <div class="offer-code">GRID10</div>
+        </section>
+    </main>
+
+    <!-- footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo" style="margin-bottom:0.5rem;">
+                        <i class="fas fa-microchip"></i>
+                        <span>ElectroGrid</span>
+                    </div>
+                    <p>India's premium gadget store. 100% genuine products, fastest delivery.</p>
+                    <div class="social-icons">
+                        <i class="fab fa-instagram"></i>
+                        <i class="fab fa-x-twitter"></i>
+                        <i class="fab fa-facebook-f"></i>
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Shop</h4>
+                    <ul><li><a class="footer-link" data-page="new">New arrivals</a></li><li><a class="footer-link" data-page="bestsellers">Best sellers</a></li><li><a class="footer-link" data-page="discounts">Discounts</a></li><li><a class="footer-link" data-page="gift">Gift cards</a></li></ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <ul><li><a class="footer-link" data-page="contact">Contact us</a></li><li><a class="footer-link" data-page="returns">Returns</a></li><li><a class="footer-link" data-page="warranty">Warranty</a></li><li><a class="footer-link" data-page="faq">FAQ</a></li></ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul><li><a class="footer-link" data-page="about">About</a></li><li><a class="footer-link" data-page="careers">Careers</a></li><li><a class="footer-link" data-page="blog">Blog</a></li><li><a class="footer-link" data-page="press">Press</a></li></ul>
+                </div>
+            </div>
+            <div class="copyright">
+                © 2025 ElectroGrid India. All rights reserved. — Gadget Shop
+            </div>
+        </div>
+    </footer>
+
+    <!-- back to top button -->
+    <div id="backToTop" title="Back to top"><i class="fas fa-chevron-up"></i></div>
+
+    <!-- Modals -->
+    <!-- Search Results Modal -->
+    <div id="searchModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Search Results</h3>
+                <button class="close-modal" onclick="closeModal('searchModal')">&times;</button>
+            </div>
+            <div id="searchResults"></div>
+        </div>
+    </div>
+
+    <!-- Wishlist Modal -->
+    <div id="wishlistModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>My Favorites</h3>
+                <button class="close-modal" onclick="closeModal('wishlistModal')">&times;</button>
+            </div>
+            <div id="wishlistItems"></div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Shopping Cart</h3>
+                <button class="close-modal" onclick="closeModal('cartModal')">&times;</button>
+            </div>
+            <div id="cartItems"></div>
+            <div class="cart-total" id="cartTotal">Total: ₹0</div>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Profile</h3>
+                <button class="close-modal" onclick="closeModal('profileModal')">&times;</button>
+            </div>
+            <div class="profile-info">
+                <i class="far fa-user-circle"></i>
+                <p><strong>Guest User</strong></p>
+                <p>Sign in to view your orders and saved addresses</p>
+                <button class="login-btn" onclick="alert('Login functionality coming soon!')">Sign In</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ---------- PRODUCT DATABASE (Indian prices) ----------
+            const products = [
+                // smartphones
+                { id:1, name:'OnePlus 12R', category:'smartphones', price:42999, oldPrice:45999, badge:'₹4000 off', img:'📱' },
+                { id:2, name:'Samsung S24 Ultra', category:'smartphones', price:129999, oldPrice:134999, badge:'Pre-order', img:'📱' },
+                { id:3, name:'iPhone 15', category:'smartphones', price:72999, oldPrice:79999, badge:'-7%', img:'📱' },
+                { id:4, name:'Nothing Phone 2', category:'smartphones', price:37999, oldPrice:39999, badge:'', img:'📱' },
+                // laptops
+                { id:5, name:'ASUS ROG Zephyrus', category:'laptops', price:154990, oldPrice:165000, badge:'Gaming', img:'💻' },
+                { id:6, name:'MacBook Air M2', category:'laptops', price:99990, oldPrice:109900, badge:'', img:'💻' },
+                { id:7, name:'HP Pavilion 14', category:'laptops', price:62990, oldPrice:68990, badge:'+free mouse', img:'💻' },
+                // audio
+                { id:8, name:'boAt Nirvana 751', category:'audio', price:1999, oldPrice:3990, badge:'50% off', img:'🎧' },
+                { id:9, name:'Sony WH-1000XM5', category:'audio', price:29990, oldPrice:32990, badge:'', img:'🎧' },
+                { id:10, name:'Noise Buds VS104', category:'audio', price:1299, oldPrice:2999, badge:'Bestseller', img:'🎧' },
+                // wearables
+                { id:11, name:'Apple Watch Series 9', category:'wearables', price:41900, oldPrice:45900, badge:'', img:'⌚' },
+                { id:12, name:'Samsung Galaxy Watch6', category:'wearables', price:32999, oldPrice:35999, badge:'', img:'⌚' },
+                { id:13, name:'Fire-Boltt Ninja', category:'wearables', price:1799, oldPrice:5999, badge:'70% off', img:'⌚' },
+                // tablets
+                { id:14, name:'iPad Air M1', category:'tablets', price:54900, oldPrice:59900, badge:'', img:'📟' },
+                { id:15, name:'Samsung Tab S9 FE', category:'tablets', price:36999, oldPrice:39999, badge:'', img:'📟' },
+                // accessories
+                { id:16, name:'Ambrane Power Bank 20k', category:'accessories', price:1299, oldPrice:2499, badge:'48% off', img:'🔋' },
+                { id:17, name:'Portronics 65W charger', category:'accessories', price:999, oldPrice:1699, badge:'', img:'🔌' },
+                { id:18, name:'Smart Stylus Pen', category:'accessories', price:1499, oldPrice:1999, badge:'', img:'✏️' },
+                { id:19, name:'Redgear Pro Controller', category:'accessories', price:1699, oldPrice:2199, badge:'', img:'🎮' },
+                { id:20, name:'Zebronic Laptop Stand', category:'accessories', price:899, oldPrice:1499, badge:'', img:'📐' },
+            ];
+
+            // ---------- State management ----------
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+            let currentUser = null;
+
+            // ---------- DOM elements ----------
+            const productGrid = document.getElementById('productGrid');
+            const dynamicTitle = document.getElementById('dynamicTitle').querySelector('h2');
+            const navLinks = document.querySelectorAll('.nav-link, .footer-link');
+            const categoryCards = document.querySelectorAll('.category-card');
+            const viewAllLinks = document.querySelectorAll('.view-all-link');
+            const backToTop = document.getElementById('backToTop');
+            const exploreBtn = document.getElementById('exploreBtn');
+            const searchIcon = document.getElementById('searchIcon');
+            const wishlistIcon = document.getElementById('wishlistIcon');
+            const cartIcon = document.getElementById('cartIcon');
+            const userIcon = document.getElementById('userIcon');
+            const joinBtn = document.getElementById('joinBtn');
+            const searchInput = document.getElementById('searchInput');
+            const searchBtn = document.getElementById('searchBtn');
+
+            // Modal elements
+            const searchModal = document.getElementById('searchModal');
+            const wishlistModal = document.getElementById('wishlistModal');
+            const cartModal = document.getElementById('cartModal');
+            const profileModal = document.getElementById('profileModal');
+            const searchResults = document.getElementById('searchResults');
+            const wishlistItems = document.getElementById('wishlistItems');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            const wishlistCount = document.getElementById('wishlistCount');
+            const cartCount = document.getElementById('cartCount');
+
+            // ---------- Helper functions ----------
+            function updateCounts() {
+                wishlistCount.textContent = wishlist.length;
+                cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            }
+
+            function formatPrice(price) {
+                return '₹' + price.toLocaleString('en-IN');
+            }
+
+            // ---------- Render products ----------
+            function renderProducts(productsToRender, title = '🔥 New Arrivals') {
+                dynamicTitle.innerText = title;
+                
+                if (productsToRender.length === 0) {
+                    productGrid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:4rem; background:white; border-radius:2rem;"><i class="fas fa-box-open" style="font-size:4rem; color:#94a3b8;"></i><h3 style="margin:1rem 0;">No products found</h3></div>';
+                    return;
+                }
+
+                let htmlStr = '';
+                productsToRender.forEach(prod => {
+                    const oldPriceHtml = prod.oldPrice ? `<span class="old-price">${formatPrice(prod.oldPrice)}</span>` : '';
+                    const badgeHtml = prod.badge ? `<span class="product-badge">${prod.badge}</span>` : '';
+                    const isInWishlist = wishlist.some(item => item.id === prod.id);
+                    const imgSvg = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f8fafc'/%3E%3Ctext x='50' y='120' font-size='80' fill='%23333'%3E${prod.img}%3C/text%3E%3C/svg%3E`;
+                    
+                    htmlStr += `
+                        <div class="product-card" data-id="${prod.id}">
+                            ${badgeHtml}
+                            <img class="product-img" src="${imgSvg}" alt="${prod.name}">
+                            <div class="product-title">${prod.name}</div>
+                            <div class="product-category"><i class="fas fa-circle"></i> ${prod.category}</div>
+                            <div class="price-row">
+                                <div><span class="current-price">${formatPrice(prod.price)}</span> ${oldPriceHtml}</div>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn-add" onclick="addToCart(${prod.id})" title="Add to cart"><i class="fas fa-plus"></i></button>
+                                <button class="btn-fav ${isInWishlist ? 'active' : ''}" onclick="toggleWishlist(${prod.id})" title="Add to favorites"><i class="fas fa-heart"></i></button>
+                            </div>
+                        </div>
+                    `;
+                });
+                productGrid.innerHTML = htmlStr;
+            }
+
+            // ---------- Global functions for buttons ----------
+            window.addToCart = function(productId) {
+                const product = products.find(p => p.id === productId);
+                if (!product) return;
+
+                const existingItem = cart.find(item => item.id === productId);
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({ ...product, quantity: 1 });
+                }
+                updateCounts();
+                
+                // Show feedback
+                const btn = event.currentTarget;
+                const icon = btn.querySelector('i');
+                icon.className = 'fas fa-check';
+                btn.style.backgroundColor = '#22c55e';
+                btn.style.borderColor = '#22c55e';
+                btn.style.color = 'white';
+                setTimeout(() => {
+                    icon.className = 'fas fa-plus';
+                    btn.style.backgroundColor = '';
+                    btn.style.borderColor = '';
+                    btn.style.color = '';
+                }, 800);
+            };
+
+            window.toggleWishlist = function(productId) {
+                const product = products.find(p => p.id === productId);
+                if (!product) return;
+
+                const index = wishlist.findIndex(item => item.id === productId);
+                if (index === -1) {
+                    wishlist.push({ ...product });
+                } else {
+                    wishlist.splice(index, 1);
+                }
+                updateCounts();
+                
+                // Update button state
+                const btn = event.currentTarget;
+                btn.classList.toggle('active');
+                
+                // Show feedback
+                const icon = btn.querySelector('i');
+                icon.className = 'fas fa-check';
+                btn.style.backgroundColor = '#22c55e';
+                btn.style.borderColor = '#22c55e';
+                btn.style.color = 'white';
+                setTimeout(() => {
+                    icon.className = 'fas fa-heart';
+                    btn.style.backgroundColor = '';
+                    btn.style.borderColor = '';
+                    btn.style.color = '';
+                }, 800);
+            };
+
+            window.removeFromCart = function(productId) {
+                cart = cart.filter(item => item.id !== productId);
+                updateCounts();
+                updateCartModal();
+            };
+
+            window.removeFromWishlist = function(productId) {
+                wishlist = wishlist.filter(item => item.id !== productId);
+                updateCounts();
+                updateWishlistModal();
+                renderProducts(products, dynamicTitle.innerText); // Re-render to update heart buttons
+            };
+
+            window.closeModal = function(modalId) {
+                document.getElementById(modalId).classList.remove('active');
+            };
+
+            // ---------- Modal update functions ----------
+            function updateSearchModal(results) {
+                if (results.length === 0) {
+                    searchResults.innerHTML = '<p style="text-align:center; color:#64748b;">No products found matching your search.</p>';
+                } else {
+                    let html = '';
+                    results.forEach(prod => {
+                        html += `
+                            <div class="cart-item">
+                                <div class="cart-item-info">
+                                    <div class="cart-item-title">${prod.name}</div>
+                                    <div class="cart-item-price">${formatPrice(prod.price)}</div>
+                                </div>
+                                <button class="btn-add" onclick="addToCart(${prod.id}); closeModal('searchModal');" style="width:auto; padding:0.5rem 1rem;">Add to cart</button>
+                            </div>
+                        `;
+                    });
+                    searchResults.innerHTML = html;
+                }
+                searchModal.classList.add('active');
+            }
+
+            function updateWishlistModal() {
+                if (wishlist.length === 0) {
+                    wishlistItems.innerHTML = '<p style="text-align:center; color:#64748b;">Your favorites list is empty.</p>';
+                } else {
+                    let html = '';
+                    wishlist.forEach(item => {
+                        html += `
+                            <div class="wishlist-item">
+                                <div class="wishlist-item-info">
+                                    <div class="wishlist-item-title">${item.name}</div>
+                                    <div class="wishlist-item-price">${formatPrice(item.price)}</div>
+                                </div>
+                                <i class="fas fa-trash remove-item" onclick="removeFromWishlist(${item.id})"></i>
+                            </div>
+                        `;
+                    });
+                    wishlistItems.innerHTML = html;
+                }
+                wishlistModal.classList.add('active');
+            }
+
+            function updateCartModal() {
+                if (cart.length === 0) {
+                    cartItems.innerHTML = '<p style="text-align:center; color:#64748b;">Your cart is empty.</p>';
+                    cartTotal.textContent = 'Total: ₹0';
+                } else {
+                    let html = '';
+                    let total = 0;
+                    cart.forEach(item => {
+                        total += item.price * item.quantity;
+                        html += `
+                            <div class="cart-item">
+                                <div class="cart-item-info">
+                                    <div class="cart-item-title">${item.name}</div>
+                                    <div class="cart-item-price">${formatPrice(item.price)} x ${item.quantity}</div>
+                                </div>
+                                <i class="fas fa-trash remove-item" onclick="removeFromCart(${item.id})"></i>
+                            </div>
+                        `;
+                    });
+                    cartItems.innerHTML = html;
+                    cartTotal.textContent = `Total: ${formatPrice(total)}`;
+                }
+                cartModal.classList.add('active');
+            }
+
+            // ---------- Navigation and filtering ----------
+            function filterByCategory(category) {
+                let filtered = category === 'all' ? products : products.filter(p => p.category === category);
+                let title = category === 'all' ? '🛒 All Products' : category.charAt(0).toUpperCase() + category.slice(1);
+                renderProducts(filtered, title);
+            }
+
+            function handleNavigation(page) {
+                navLinks.forEach(link => link.classList.remove('active'));
+                document.querySelectorAll(`[data-page="${page}"]`).forEach(el => el.classList.add('active'));
+
+                switch(page) {
+                    case 'home':
+                        renderProducts(products, '🔥 New Arrivals');
+                        break;
+                    case 'shop':
+                        renderProducts(products, '🛒 All Products');
+                        break;
+                    case 'deals':
+                        const deals = products.filter(p => p.oldPrice);
+                        renderProducts(deals, '🏷️ Today\'s Deals');
+                        break;
+                    case 'support':
+                        productGrid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:4rem; background:white; border-radius:2rem;"><i class="fas fa-headset" style="font-size:4rem; color:#3b82f6;"></i><h3 style="margin:1rem 0;">Contact Us</h3><p>📞 1800-123-4567 (Toll Free) | support@electrogrid.in</p><p>💬 Chat support 24/7 available</p></div>';
+                        dynamicTitle.innerText = '🤝 Support';
+                        break;
+                    case 'about':
+                        productGrid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:4rem; background:white; border-radius:2rem;"><i class="fas fa-store" style="font-size:4rem; color:#3b82f6;"></i><h3>ElectroGrid India</h3><p>Founded in 2020, now in 10+ cities. We bring the latest technology.</p></div>';
+                        dynamicTitle.innerText = 'About Us';
+                        break;
+                    case 'contact':
+                        productGrid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:4rem; background:white; border-radius:2rem;"><i class="fas fa-envelope" style="font-size:4rem; color:#3b82f6;"></i><h3>contact@electrogrid.in</h3><p>📞 011-45678900 (Delhi HQ)</p></div>';
+                        dynamicTitle.innerText = 'Contact';
+                        break;
+                    default:
+                        productGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:4rem; background:white; border-radius:2rem;"><i class="fas fa-file-alt" style="font-size:4rem; color:#3b82f6;"></i><h3>${page} page coming soon</h3></div>`;
+                        dynamicTitle.innerText = page;
+                }
+            }
+
+            // ---------- Event Listeners ----------
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const page = link.getAttribute('data-page');
+                    if (page) handleNavigation(page);
+                });
+            });
+
+            categoryCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const cat = card.getAttribute('data-category');
+                    filterByCategory(cat);
+                });
+            });
+
+            viewAllLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    filterByCategory('all');
+                });
+            });
+
+            exploreBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                handleNavigation('deals');
+            });
+
+            // Search functionality
+            function performSearch() {
+                const query = searchInput.value.toLowerCase().trim();
+                if (query === '') {
+                    alert('Please enter a search term');
+                    return;
+                }
+                const results = products.filter(p => 
+                    p.name.toLowerCase().includes(query) || 
+                    p.category.toLowerCase().includes(query)
+                );
+                updateSearchModal(results);
+            }
+
+            searchBtn.addEventListener('click', performSearch);
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') performSearch();
+            });
+
+            // Icon clicks
+            searchIcon.addEventListener('click', () => {
+                searchInput.focus();
+            });
+
+            wishlistIcon.addEventListener('click', () => {
+                updateWishlistModal();
+            });
+
+            cartIcon.addEventListener('click', () => {
+                updateCartModal();
+            });
+
+            userIcon.addEventListener('click', () => {
+                profileModal.classList.add('active');
+            });
+
+            joinBtn.addEventListener('click', () => {
+                alert('✅ Thank you! Member benefits activated (demo).');
+            });
+
+            // Close modals when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target.classList.contains('modal')) {
+                    e.target.classList.remove('active');
+                }
+            });
+
+            // Back to top
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 400) {
+                    backToTop.classList.add('show');
+                } else {
+                    backToTop.classList.remove('show');
+                }
+            });
+
+            backToTop.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Initial render
+            renderProducts(products, '🔥 New Arrivals');
+            updateCounts();
+            document.querySelectorAll('[data-page="home"]').forEach(el => el.classList.add('active'));
+        })();
+    </script>
+</body>
+</html>
