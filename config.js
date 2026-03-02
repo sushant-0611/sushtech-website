@@ -118,9 +118,9 @@ const SUSHITECH_CONFIG = {
     // E-Commerce Demo Links
     ecommerceDemos: {
         ecommerce1: "https://sushant-0611.github.io/E-Commerce-demo/Template_1.html", // Fashion
-        ecommerce2: "https://sushant-0611.github.io/E-Commerce-demo/Template_1.html", // Electronics
-        ecommerce3: "https://sushant-0611.github.io/E-Commerce-demo/Template_1.html", // Furniture
-        ecommerce4: "https://sushant-0611.github.io/E-Commerce-demo/Template_1.html"  // Jewelry
+        ecommerce2: "https://sushant-0611.github.io/E-Commerce-demo/Template_2.html", // Electronics
+        ecommerce3: "https://sushant-0611.github.io/E-Commerce-demo/Template_3.html", // Furniture
+        ecommerce4: "https://sushant-0611.github.io/E-Commerce-demo/Template_4.html"  // Jewelry
     },
     
     // Social Links
@@ -146,6 +146,7 @@ const SUSHITECH_CONFIG = {
 }
 
 };
+
 
 
 
