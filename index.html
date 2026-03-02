@@ -12,7 +12,7 @@
     <meta name="author" content="Sushant Kakade">
     <meta name="robots" content="index, follow">
 
-    <!-- FIXED Canonical URL -->
+    <!-- Canonical URL -->
     <link rel="canonical" href="https://sushant-0611.github.io/">
 
     <!-- Open Graph -->
@@ -25,23 +25,47 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="SushTech_favicon.ico">
 
-    <!-- OPTIMIZED: Font loading strategy for better LCP -->
-    <!-- 1. Preconnect to Google Fonts domains (critical) -->
+    <!-- OPTIMIZED: Font loading strategy -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <!-- 2. Preload critical font styles for hero section -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
-    
-    <!-- 3. Load fonts with display=swap to prevent invisible text -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" media="print" onload="this.media='all'">
     <noscript>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap">
     </noscript>
 
-    <!-- OPTIMIZED: Bootstrap CSS - inline critical styles, defer rest -->
+    <!-- OPTIMIZED: Critical CSS - inline for immediate rendering -->
     <style>
-        /* Critical Bootstrap grid and container styles for hero section */
+        /* ===== CRITICAL CSS ===== */
+        :root {
+            --primary: #22D3EE;
+            --accent: #3B82F6;
+            --bg-dark: #0B1120;
+            --dark-bg: #030712;
+            --card-bg: #111827;
+            --text-light: #F8FAFC;
+            --text-primary: #F9FAFB;
+            --text-muted: #9CA3AF;
+            --border-color: #1F2937;
+        }
+
+        /* Base critical styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Critical Bootstrap grid and container styles */
         .container {
             width: 100%;
             padding-right: 15px;
@@ -49,116 +73,27 @@
             margin-right: auto;
             margin-left: auto;
         }
+
         @media (min-width: 576px) {
-            .container {
-                max-width: 540px;
-            }
+            .container { max-width: 540px; }
         }
         @media (min-width: 768px) {
-            .container {
-                max-width: 720px;
-            }
+            .container { max-width: 720px; }
         }
         @media (min-width: 992px) {
-            .container {
-                max-width: 960px;
-            }
+            .container { max-width: 960px; }
         }
         @media (min-width: 1200px) {
-            .container {
-                max-width: 1140px;
-            }
+            .container { max-width: 1140px; }
         }
-        /* Critical text styles for hero */
+
+        /* Critical text styles */
         h2, p {
             margin-top: 0;
             margin-bottom: 1rem;
             font-family: 'Poppins', sans-serif;
         }
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-        }
-    </style>
-    
-    <!-- Defer non-critical Bootstrap CSS -->
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    </noscript>
 
-    <!-- OPTIMIZED: Font Awesome - inline critical icons for hero, defer rest -->
-    <style>
-        /* Critical icon styles for hero section (if any) */
-        .fab, .fas {
-            display: inline-block;
-            font-style: normal;
-            font-variant: normal;
-            text-rendering: auto;
-            line-height: 1;
-        }
-    </style>
-    
-    <!-- Defer Font Awesome with preload -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    </noscript>
-
-    <!-- OPTIMIZED: Your main CSS - inline critical styles, defer rest -->
-    <style>
-        /* Critical CSS for hero section and layout */
-        :root {
-            --primary: #22D3EE;
-            --bg-dark: #0B1120;
-            --text-light: #F8FAFC;
-        }
-        
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-light);
-            line-height: 1.6;
-        }
-        
-        .hero {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 80px 0;
-            background: linear-gradient(135deg, #0B1120 0%, #1A1F2F 100%);
-            overflow: hidden;
-        }
-        
-        .hero h2 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            color: #fff;
-        }
-        
-        .hero p {
-            font-size: clamp(1rem, 2vw, 1.25rem);
-            max-width: 700px;
-            margin: 0 auto 2rem;
-            color: #94A3B8;
-        }
-        
-        .highlight {
-            color: var(--primary);
-        }
-        
-        .container {
-            position: relative;
-            z-index: 10;
-        }
-        
         /* Critical header styles */
         header {
             position: fixed;
@@ -173,26 +108,63 @@
             background: rgba(11, 17, 32, 0.95);
             backdrop-filter: blur(10px);
         }
-        
+
         .logo img {
             height: 50px;
             width: auto;
         }
-        
+
         .menu-icon {
             font-size: 30px;
             cursor: pointer;
             color: #fff;
         }
-        
-        /* Button styles */
+
+        /* Critical hero styles */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 0;
+            background: linear-gradient(135deg, #0B1120 0%, #1A1F2F 100%);
+            overflow: hidden;
+        }
+
+        .hero h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            color: #fff;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: #94A3B8;
+        }
+
+        .highlight {
+            color: var(--primary);
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Critical button styles */
         .hero-buttons {
             display: flex;
             gap: 20px;
             justify-content: center;
             flex-wrap: wrap;
         }
-        
+
         .btn-primary, .btn-secondary {
             padding: 14px 32px;
             border-radius: 50px;
@@ -201,31 +173,70 @@
             transition: all 0.3s ease;
             display: inline-block;
         }
-        
+
         .btn-primary {
             background: var(--primary);
             color: #0B1120;
         }
-        
+
         .btn-secondary {
             background: transparent;
             color: #fff;
             border: 2px solid rgba(255, 255, 255, 0.2);
         }
     </style>
-    
-    <!-- Defer main stylesheet -->
-    <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+    <!-- OPTIMIZED: Defer non-critical Bootstrap CSS -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     </noscript>
 
-    <!-- OPTIMIZED: Preload hero image for LCP -->
+    <!-- OPTIMIZED: Defer Font Awesome -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    </noscript>
+
+    <!-- OPTIMIZED: Import all CSS files (deferred loading for better performance) -->
+    <link rel="stylesheet" href="css/base.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="css/animations.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="css/header.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="css/hero.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="css/buttons.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="css/pricing.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="css/why-choose.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="css/demo.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="css/about.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="css/contact.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="css/footer.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="css/floating-elements.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="css/responsive.css" media="print" onload="this.media='all'">
+
+    <!-- Fallback for browsers without JavaScript -->
+    <noscript>
+        <link rel="stylesheet" href="css/base.css">
+        <link rel="stylesheet" href="css/animations.css">
+        <link rel="stylesheet" href="css/header.css">
+        <link rel="stylesheet" href="css/hero.css">
+        <link rel="stylesheet" href="css/buttons.css">
+        <link rel="stylesheet" href="css/pricing.css">
+        <link rel="stylesheet" href="css/why-choose.css">
+        <link rel="stylesheet" href="css/demo.css">
+        <link rel="stylesheet" href="css/about.css">
+        <link rel="stylesheet" href="css/contact.css">
+        <link rel="stylesheet" href="css/footer.css">
+        <link rel="stylesheet" href="css/floating-elements.css">
+        <link rel="stylesheet" href="css/responsive.css">
+    </noscript>
+
+    <!-- OPTIMIZED: Preload hero images for LCP -->
     <link rel="preload" as="image" href="SushTech_logo_transparent1.webp" type="image/webp">
+    <link rel="preload" as="image" href="web background.webp" type="image/webp">
 </head>
 
 <body>
-    <!-- Header (critical for LCP - already in HTML) -->
+    <!-- Header -->
     <header>
         <div class="logo">
             <img src="SushTech_logo_transparent1.webp" loading="eager" fetchpriority="high" alt="SushTech Logo" width="50" height="50">
@@ -233,7 +244,7 @@
 
         <div class="menu-icon" id="menuToggle">☰</div>
 
-        <!-- Right Side Panel Menu -->
+        <!-- Right Side Panel Menu - Updated sequence to match menu order -->
         <div class="side-panel" id="sidePanel">
             <div class="panel-header">
                 <div class="panel-logo">
@@ -243,8 +254,9 @@
             </div>
             <nav class="panel-nav">
                 <a href="#home" class="panel-link">Home</a>
-                <a href="#pricing" class="panel-link">Pricing</a>
+                <a href="#demo" class="panel-link">Demo Websites</a>
                 <a href="#why-choose" class="panel-link">Why Us</a>
+                <a href="#features" class="panel-link">Features</a> <!-- UPDATED: from Pricing to Features -->
                 <a href="#about" class="panel-link">About</a>
                 <a href="#contact" class="panel-link">Contact</a>
             </nav>
@@ -257,114 +269,23 @@
     <!-- Overlay for when panel is open -->
     <div class="overlay" id="overlay"></div>
 
-    <!-- Hero Section - Static HTML for LCP (no JS needed) -->
+    <!-- Hero Section -->
     <section id="home" class="hero">
-        <!-- Waves and particles (your custom animations) -->
-        <div class="waves">
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
-        </div>
-        
-        <div class="particles">
-            <!-- Row 1 - Top -->
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            
-            <!-- Row 2 - Middle -->
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            
-            <!-- Row 3 - Bottom -->
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-        </div>
-        
         <div class="container">
-            <!-- LCP element: Hero paragraph - now static with fetchpriority -->
             <h2>
                 We Help <span class="highlight">Businesses Grow</span> Online
             </h2>
             <p fetchpriority="high">Professional web development company delivering fast, secure, and high-performance digital solutions.</p>
             <div class="hero-buttons">
                 <a href="#contact" class="btn-primary">Get Free Consultation</a>
-                <a href="#pricing" class="btn-secondary">View Pricing</a>
+                <a href="#features" class="btn-secondary">View Features</a> <!-- UPDATED: from Pricing to Features -->
             </div>
         </div>
     </section>
 
-    <!-- Rest of your sections (unchanged, but now with optimized loading) -->
-    <!-- Pricing Section -->
-    <section id="pricing" class="pricing">
+    <!-- Demo Websites Section -->
+    <section id="demo" class="demo-section">
         <div class="container">
-            <h3>Simple, Transparent Pricing</h3>
-            <div class="pricing-subhead">Choose the plan that fits your needs — no negotiation, no hidden fees.</div>
-            
-            <!-- Pricing cards will be populated from config.js -->
-            <div class="pricing-grid" id="pricing-grid">
-                <!-- Dynamic content from JavaScript -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Why Choose Us Section -->
-    <section id="why-choose" class="why-choose">
-        <div class="container">
-            <h3>Why Choose SushTech?</h3>
-            <div class="choose-grid">
-                <div class="choose-item">
-                    <i class="fas fa-rocket"></i>
-                    <h4>Fast Delivery</h4>
-                    <p>We respect your time. Get your website live in days, not weeks.</p>
-                </div>
-                <div class="choose-item">
-                    <i class="fas fa-tag"></i>
-                    <h4>Affordable Pricing</h4>
-                    <p>High-quality solutions without breaking your bank.</p>
-                </div>
-                <div class="choose-item">
-                    <i class="fas fa-shield-alt"></i>
-                    <h4>Secure Hosting</h4>
-                    <p>Free SSL and daily backups for peace of mind.</p>
-                </div>
-                <div class="choose-item">
-                    <i class="fas fa-headset"></i>
-                    <h4>Local Support</h4>
-                    <p>We're based in India. Real people, fast response.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            
-            <!-- FIXED: Demo showcase with improved mobile responsiveness -->
             <div class="demo-showcase">
                 <h3 class="demo-title">Our <span class="highlight">Demo</span> Websites</h3>
                 <p class="demo-subtitle">Explore our work across different categories</p>
@@ -461,6 +382,54 @@
                     <span class="dot"></span>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section id="why-choose" class="why-choose">
+        <div class="container">
+            <h3>Why Choose SushTech?</h3>
+            <div class="choose-grid">
+                <div class="choose-item">
+                    <i class="fas fa-rocket"></i>
+                    <h4>Fast Delivery</h4>
+                    <p>We respect your time. Get your website live in days, not weeks.</p>
+                </div>
+                <div class="choose-item">
+                    <i class="fas fa-tag"></i>
+                    <h4>Affordable Pricing</h4>
+                    <p>High-quality solutions without breaking your bank.</p>
+                </div>
+                <div class="choose-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>Secure Hosting</h4>
+                    <p>Free SSL and daily backups for peace of mind.</p>
+                </div>
+                <div class="choose-item">
+                    <i class="fas fa-headset"></i>
+                    <h4>Local Support</h4>
+                    <p>We're based in India. Real people, fast response.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section - UPDATED: Section ID from "pricing" to "features" -->
+    <section id="features" class="pricing">
+        <div class="container">
+            <h3>Simple, Transparent Features</h3> <!-- UPDATED: from Pricing to Features -->
+            <div class="pricing-subhead">Choose the plan that fits your needs.</div>
+            
+            <!-- Features cards will be populated from config.js -->
+            <div class="pricing-grid" id="pricing-grid">
+                <!-- Dynamic content from JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
             <div class="about-content">
                 <h3>About SushTech</h3>
                 <p>SushTech is a young and innovative digital agency founded by Sushant Kakade. We help businesses succeed online with high-quality, affordable and scalable digital solutions. Our team blends technology with creativity to deliver exceptional results.</p>
@@ -653,7 +622,7 @@
                     <ul>
                         <li><a href="#about">About Us</a></li>
                         <li><a href="#why-choose">Why Choose Us</a></li>
-                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#features">Features</a></li> <!-- UPDATED: from Pricing to Features -->
                         <li><a href="#contact">Contact</a></li>
                     </ul>
                 </div>
@@ -662,10 +631,10 @@
                 <div class="footer-col">
                     <h5>Services</h5>
                     <ul>
-                        <li><a href="#pricing">Website Development</a></li>
-                        <li><a href="#pricing">E-Commerce Solutions</a></li>
-                        <li><a href="#pricing">SEO Services</a></li>
-                        <li><a href="#pricing">Wedding Websites</a></li>
+                        <li><a href="#features">Website Development</a></li> <!-- UPDATED: from Pricing to Features -->
+                        <li><a href="#features">E-Commerce Solutions</a></li> <!-- UPDATED: from Pricing to Features -->
+                        <li><a href="#features">SEO Services</a></li> <!-- UPDATED: from Pricing to Features -->
+                        <li><a href="#features">Wedding Websites</a></li> <!-- UPDATED: from Pricing to Features -->
                     </ul>
                 </div>
                 
